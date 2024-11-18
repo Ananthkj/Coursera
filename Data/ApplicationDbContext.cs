@@ -3,17 +3,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Coursera.Data
 {
+
     public class ApplicationDbContext:DbContext
     {
+        public DbSet<UniversityFormModel> universityFormModels { get; set; }
+
+        public DbSet<ContactViewModel> contactUs { get; set; }
+
+        public DbSet<newStudent> newStudents { get; set; }
+
+        public DbSet<User> users { get; set; }
+        public DbSet<Role>roles { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
           
         }
-        public DbSet<UniversityFormModel> universityFormModels { get; set; }
-
-        public DbSet<ContactViewModel> contactUs {  get; set; }
-
-        public DbSet<newStudent> newStudents { get; set; }
+        
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
