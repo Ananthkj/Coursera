@@ -5,8 +5,8 @@ using MimeKit;
 using MimeKit.Text;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Coursera.Services;
 using Coursera.Data;
+using Coursera.Services.Email;
 
 namespace Coursera.Controllers
 {

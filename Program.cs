@@ -1,6 +1,7 @@
 using Coursera.Data;
 using Coursera.Models;
-using Coursera.Services;
+using Coursera.Services.Email;
+using Coursera.Services.Folder;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
