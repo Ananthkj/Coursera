@@ -19,7 +19,18 @@ namespace Coursera.Data
         {
           
         }
-        
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id=1,RoleName="Admin"},
+                new Role { Id=2,RoleName="Instructor"},
+                new Role { Id=3,RoleName="Student"}
+                );
+        }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
