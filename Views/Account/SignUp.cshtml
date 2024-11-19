@@ -1,0 +1,27 @@
+﻿@model SignUpUserModel;
+@{
+    Layout = null;
+}
+@Html.Partial("_BootstrapPartial");
+
+
+<h1>SignUp page</h1>
+<form asp-controller="Account" asp-action="SignUp" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <label asp-for="Username">Username: </label>
+    <input type="text" asp-for="Username" id="Username" placeholder="Enter name" /> <br />
+    <span asp-validation-for="Username" class="text-danger"></span><br />
+
+    <label asp-for="Email">Email: </label>
+    <input type="email" asp-for="Email" id="Email" placeholder="xyz@gmail.com" /><br />
+    <span asp-validation-for="Email" class="text-danger"></span><br />
+
+    <label asp-for="Password">Password: </label>
+    <input type="password" asp-for="Password" id="Password" placeholder="Mininum 6 Characters" /><br />
+    <span asp-validation-for="Password" class="text-danger"></span><br />
+
+    <label asp-for="ConfirmPassword">Confirm Password: </label>
+    <input type="password" asp-for="ConfirmPassword" id="ConfirmPassword" placeholder="Mininum 6 Characters" /><br />
+    <span asp-validation-for="ConfirmPassword" class="text-danger"></span><br />
+    <button type="submit">Sign-Up</button>
+</form>
