@@ -111,4 +111,10 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Instructor\Models\" />
+    <Folder Include="Areas\Student\Models\" />
+  </ItemGroup>
+
 </Project>

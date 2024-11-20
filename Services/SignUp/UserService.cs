@@ -20,7 +20,7 @@ namespace Coursera.Services.SignUp
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.users.FirstOrDefaultAsync(x => x.Email == email);
+            return await _context.users.Include(u => u.Role).FirstOrDefaultAsync(u=>u.Email==email);
         }
     }
 }

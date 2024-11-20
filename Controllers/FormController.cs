@@ -126,7 +126,7 @@ namespace Coursera.Controllers
                     }
                     
                     var Upload_Stream = new FileStream(Upload_Path, FileMode.Create);
-                    myfile.CopyToAsync(Upload_Stream);
+                   await myfile.CopyToAsync(Upload_Stream);
 
                 }catch(Exception ex)
                 {

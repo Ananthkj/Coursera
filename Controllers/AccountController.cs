@@ -25,6 +25,11 @@ namespace Coursera.Controllers
             return View();
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         public IActionResult SignUp()
         {
             return View();
@@ -80,7 +85,67 @@ namespace Coursera.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
+            }
+            return View(model);
+        }
+
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginUserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userFromDb=await _usersService.GetUserByEmailAsync(model.Email);
+              
+                if(userFromDb==null||!BCrypt.Net.BCrypt.Verify(model.Password,userFromDb.PasswordHash))
+                {
+                    ModelState.AddModelError("","Invalid Email or Password");
+                    return View(model);
+                }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userFromDb.Id.ToString()),
+                    new Claim(ClaimTypes.Email, userFromDb.Email),
+                    new Claim(ClaimTypes.Role, userFromDb.Role.RoleName) // Assuming the role is stored
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // Set authentication properties
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true, // Remember user across sessions
+                    ExpiresUtc = DateTime.UtcNow.AddDays(30) // Cookie expiration time
+                };
+
+                // Sign the user in
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                // Redirect based on user role or preference
+                if (userFromDb.Role.RoleName == "Admin")
+                {
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                }
+
+                if(userFromDb.Role.RoleName=="Instructor")
+                {
+                    return RedirectToAction("Index", "Dashboard", new {area="Instructor"});
+                }
+
+                if(userFromDb.Role.RoleName=="Student")
+                {
+                    return RedirectToAction("Index","Dashboard",new {area="Student"});
+                }
             }
             return View(model);
         }

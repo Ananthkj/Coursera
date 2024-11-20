@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 // Configure Claims-Based Authentication using Cookies
-builder.Services.AddAuthentication(options =>
+/*builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -33,13 +33,33 @@ builder.Services.AddAuthentication(options =>
     options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect if access is denied
     options.ExpireTimeSpan = TimeSpan.FromDays(30); // Customize cookie expiration
     options.SlidingExpiration = true; // Renew cookies on each valid request
+    options.Cookie.HttpOnly = true; // Protect cookies from JavaScript access
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure cookies are sent only over HTTPS
+    options.Cookie.SameSite = SameSiteMode.Strict; // Mitigate CSRF attacks
+});*/
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
-// Add session services (optional, if you use HttpContext.Session)
+// Configure Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+    {
+        policy.RequireRole("Admin", "Instructor", "Student"); // User must have any one of these roles
+    });
+});
+
+// Add Session services
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
-    options.Cookie.HttpOnly = true; // Protect against JavaScript access
+    options.Cookie.HttpOnly = true; // Protect session cookies from JavaScript access
     options.Cookie.IsEssential = true; // Required for GDPR compliance
 });
 
@@ -73,8 +93,12 @@ using (var scope=app.Services.CreateScope())
     seedService.Seed();
 }
 
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "Areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

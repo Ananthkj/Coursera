@@ -1,5 +1,6 @@
 ﻿using Coursera.Data;
 using Coursera.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Coursera.Services.SeedService
 {
@@ -13,6 +14,7 @@ namespace Coursera.Services.SeedService
 
         public void Seed()
         {
+            /*_context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Users',RESEED,0)");*/
             // Check if roles already exist
            if(!_context.roles.Any(r=>r.RoleName=="Admin"))
             {
@@ -37,9 +39,10 @@ namespace Coursera.Services.SeedService
                 var adminRoleId = _context.roles.FirstOrDefault(r => r.RoleName == "Admin").Id;
                 _context.users.Add(new User()
                 {
+                    
                     Name="Admin",
                     Email= "anandkumarj95@gmail.com",
-                    PasswordHash="1234",
+                    PasswordHash=BCrypt.Net.BCrypt.HashPassword("1234"),
                     CreatedDate= DateTime.Now,
                     IsActive= false,
                     RoleId=adminRoleId
