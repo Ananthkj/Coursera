@@ -149,5 +149,17 @@ namespace Coursera.Controllers
             }
             return View(model);
         }
+
+        // public IActionResult Logout()
+        // {
+        //     return View();
+        // }
+        
+        [HttpPost]
+         public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index","Home");
+        }
     }
 }
