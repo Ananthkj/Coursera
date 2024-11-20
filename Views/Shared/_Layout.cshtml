@@ -85,10 +85,22 @@
                     </div>
                     <a href=@Url.Action("contact","Home") class="nav-item nav-link">Contact</a>
                 </div>
-                <a href=@Url.Action("registration","Home") class="btn btn-primary d-none d-lg-block">Register</a>
-                <form asp-action="Logout" asp-controller="Account" method="post">
-                    <button type="submit" class="btn btn-link">Logout</button>
-                </form>
+               
+                <ul style="list-style-type:none;display:flex;gap:1rem">
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <form asp-action="Logout" asp-controller="Account" method="post">
+                                <button type="submit" class="btn btn-primary">Logout</button>
+                            </form>
+                        </li>
+                    }else
+                    {
+                        <li><a asp-action="Login" asp-controller="Account" class="btn btn-primary">LogIn</a></li>
+                        <li><a asp-action="SignUp" asp-controller="Account" class="btn btn-primary">Sign Up</a></li>
+                    }
+                </ul>
+
             </div>
         </nav>
     </div>
