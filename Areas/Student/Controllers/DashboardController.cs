@@ -11,5 +11,15 @@ namespace Coursera.Areas.Student.Controllers
         {
             return View();
         }
+
+        public IActionResult tables()
+        {
+            return View();
+        }
+
+        public IActionResult Index2()
+        {
+            return View();
+        }
     }
 }
