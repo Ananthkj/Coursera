@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Coursera.Models.User>
+
+<h1>User Management List</h1>
+
+@{
+    int count = 1;
+}
+
+<table class="table table-head-bg-primary mt-4">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">UserRole</th>
+            <th scope="col">IsActive</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var users in Model)
+        {
+            <tr>
+                <td>@count</td>
+                <td>@users.Name</td>
+                <td>@users.Email</td>
+                <td>@users.Role.RoleName</td>
+                <td>@users.IsActive</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@users.Id" class="btn btn-warning">Edit</a>
+                    @*   <a asp-action="Delete" asp-route-id="@users.Id" class="btn btn-sm btn-danger">Delete</a> *@
+                    <button type="button"
+                            class="btn btn-danger alert-demo"
+                            data-user-id="@users.Id">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).on("click", ".alert-demo", function (e) {
+        e.preventDefault();
+        var userId = $(this).data("user-id");
+
+        swal({
+            title: "Are you sure?",
+            text: "You won't be able to revert this User Data!",
+            type: "warning",
+            buttons: {
+                cancel: {
+                    visible: true,
+                    text: "No, cancel!",
+                    className: "btn btn-danger",
+                },
+                confirm: {
+                    text: "Yes, delete it!",
+                    className: "btn btn-success",
+                },
+            },
+        }).then((willDelete) => {
+            if (willDelete) {
+                window.location.href = `/Admin/UserManagement/Delete/${userId}`;
+            } else {
+                swal("Action canceled. User Data is safe!", {
+                    buttons: {
+                        confirm: {
+                            className: "btn btn-success",
+                        },
+                    },
+                });
+            }
+        });
+    });
+</script>

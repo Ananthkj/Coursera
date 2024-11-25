@@ -1,18 +1,22 @@
-﻿namespace Coursera.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Coursera.Models
 {
     public class User
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
+        [Required]
+        public string? Name { get; set; }
+        [Required, EmailAddress]
+        public string? Email { get; set; }
+        public string? PasswordHash { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public bool IsActive {  get; set; }
-
+        [Required]
         public int RoleId { get; set; }
 
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
 
     }
 }
