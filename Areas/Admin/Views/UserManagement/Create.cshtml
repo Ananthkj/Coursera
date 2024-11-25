@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@model Coursera.Models.User
+
+<h1>Add New User</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="PasswordHash">Password</label>
+        <input asp-for="PasswordHash" type="password" class="form-control" />
+        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="RoleId">Role</label>
+        <select asp-for="RoleId" asp-items="ViewBag.Roles" class="form-control">
+            <option value="">Select a Role</option>
+        </select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsActive" class="control-label">Is Active</label>
+        <input asp-for="IsActive" type="checkbox" class="form-check-input" />
+        <span asp-validation-for="IsActive" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

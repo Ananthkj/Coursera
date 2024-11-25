@@ -112,7 +112,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Instructor\Models\" />
     <Folder Include="Areas\Instructor\Models\" />
     <Folder Include="Areas\Student\Models\" />
   </ItemGroup>
