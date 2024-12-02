@@ -18,6 +18,9 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Font Awesome Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
+
     <!-- Libraries Stylesheet -->
     <link href=@Url.Content("~/lib/owlcarousel/assets/owl.carousel.min.css") rel="stylesheet">
 
@@ -99,7 +102,9 @@
                         <li><a asp-action="Login" asp-controller="Account" class="btn btn-primary">LogIn</a></li>
                         <li><a asp-action="SignUp" asp-controller="Account" class="btn btn-primary">Sign Up</a></li>
                     }
+                    <li><a href="@Url.Action("RedirectToDashboard","Account")"><i class="fa-solid fa-user fa-2x"></i></a></li>
                 </ul>
+
 
             </div>
         </nav>

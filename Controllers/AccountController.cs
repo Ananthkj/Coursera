@@ -161,5 +161,28 @@ namespace Coursera.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index","Home");
         }
+
+        public IActionResult RedirectToDashboard()
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (userRole == "Admin")
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
+            else if (userRole == "Instructor")
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Instructor" });
+            }
+            else if (userRole == "Student")
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Student" });
+            }
+            else
+            {
+                return RedirectToAction("SignUp", "Account");
+            }
+        }
+
     }
 }
