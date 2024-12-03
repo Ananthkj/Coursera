@@ -16,6 +16,7 @@ namespace Coursera.Models
         [Required]
         public int RoleId { get; set; }
 
+        //Single entity means single role can be given
         public Role? Role { get; set; }
 
     }
