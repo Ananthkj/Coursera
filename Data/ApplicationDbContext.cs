@@ -15,6 +15,12 @@ namespace Coursera.Data
         public DbSet<User> users { get; set; }
         public DbSet<Role>roles { get; set; }
 
+        public DbSet<Course> courses {  get; set; }
+        
+        public DbSet<CourseSection> courseSections { get; set; }
+
+        public DbSet<CourseLesson> courseLessons { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
           
