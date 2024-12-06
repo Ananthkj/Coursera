@@ -1,0 +1,9 @@
+﻿@model AddSectionViewModel;
+
+<h1>Add Section</h1>
+<form action="AddSection" method="post">
+    <input type="hidden" asp-for="CourseId" />
+    <label asp-for="CourseSectionName">CourseSectionName: </label>
+    <input asp-for="CourseSectionName" /><br /> <br />
+    <button type="submit">Next</button>
+</form>

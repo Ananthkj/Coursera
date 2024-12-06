@@ -1,0 +1,17 @@
+﻿@model AddLessonViewModel;
+
+<h1>Add Lesson Section</h1>
+<form action="AddLesson" method="post">
+    <input type="hidden" asp-for="CourseId" />
+    <label asp-for="CourseLessonName">Lesson Name: </label>
+    <input asp-for="CourseLessonName" /><br/> <br />
+    <label asp-for="ContentUrl">Content Url: </label>
+    <input asp-for="ContentUrl" /><br /> <br />
+    <label asp-for="ContentType">Content Type: </label>
+    <input asp-for="ContentType" /><br /> <br />
+    <button type="submit">Add New lesson</button>
+    <button type="submit" formaction="@Url.Action("CompleteLesson","Course")">
+        Complete
+        </button>
+
+</form>

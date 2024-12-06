@@ -15,7 +15,7 @@ namespace Coursera.Models
 
         public DateTime CreatedDate { get; set; }
 
-        public bool IsApproved {  get; set; }
+        public ApprovalStatus ApprovalStatus {  get; set; }
 
         public bool IsPublished {  get; set; }
 
