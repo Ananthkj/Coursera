@@ -1,0 +1,26 @@
+@model List<Coursera.Models.CourseSection>
+
+<h4>Sections</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Section Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sections in Model)
+        {
+            <tr>
+                <td>@sections.CourseSectionName</td>
+                <td>
+                    <button class="btn btn-primary view-lessons" data-id="@sections.Id">View Lessons</button>
+                    <button class="btn btn-secondary edit-section" data-id="@sections.Id">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Placeholder for Lessons -->
+<div id="lessonsContainer"></div>

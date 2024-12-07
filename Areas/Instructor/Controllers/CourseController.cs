@@ -134,5 +134,54 @@ namespace Coursera.Areas.Instructor.Controllers
             throw new Exception("User ID not found in claims.");
         }
 
+
+        public async Task<IActionResult> GetCourse(int CourseId)
+        {
+            var courseData=await _context.courses.Where(c=>c.Id==CourseId).Select(s=>new EditCourseViewModel
+            {Id=s.Id,CourseName=s.CourseName,CourseDescription=s.CourseDescription}
+            ).FirstOrDefaultAsync();
+
+            if(courseData==null)
+            {
+                return NotFound("Course Not Found");
+            }
+
+            return PartialView("_EditCourseModal",courseData);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(EditCourseViewModel model)
+        {
+            Console.WriteLine(model.Id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var course =await _context.courses.FirstOrDefaultAsync(c=>c.Id==model.Id);
+            if (course == null)
+            {
+                return NotFound("Course not found.");
+            }
+
+            // Update course details
+            course.CourseName = model.CourseName;
+            course.CourseDescription = model.CourseDescription;
+
+           await _context.SaveChangesAsync();
+
+            return Ok("Course updated successfully.");
+        }
+
+
+        public async Task<IActionResult> GetSections(int CourseId)
+        {
+          var sections=  await _context.courseSections.Where(c=>c.CourseId==CourseId).Select(s=>new CourseSection{
+                Id=s.Id,
+                CourseSectionName=s.CourseSectionName
+            }).ToListAsync();
+            return PartialView("_SectionsPartial",sections);
+        }
+
     }
 }
