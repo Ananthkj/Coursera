@@ -38,6 +38,8 @@
 <!-- Placeholder for Modals -->
 <div id="modalContainer"></div>
 
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -61,6 +63,7 @@
             e.preventDefault(); // Prevents default form submission
 
             const formData = $(this).serialize(); // Serializes form inputs into a query string
+            console.log(formData);
 
             $.post('/Instructor/Course/UpdateCourse', formData)
                 .done(function (response) {
@@ -71,6 +74,9 @@
                     alert(xhr.responseText); // Show server error message
                 });
         });
+
+
+
 
 
     });

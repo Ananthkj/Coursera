@@ -183,5 +183,50 @@ namespace Coursera.Areas.Instructor.Controllers
             return PartialView("_SectionsPartial",sections);
         }
 
+        
+        public async Task<IActionResult> GetSectionEdit(int SectionId)
+        {
+          var sections=  await _context.courseSections.Where(c=>c.Id==SectionId).Select(s=>new EditSectionViewModel{
+                Id=s.Id,
+                CourseSectionName=s.CourseSectionName
+            }).FirstOrDefaultAsync();
+
+            if(sections==null)
+            {
+                return NotFound("Section Not Found");
+            }
+            return PartialView("_EditSectionModal",sections);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateSection(EditSectionViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Data");
+            }
+           var sections= await _context.courseSections.FirstOrDefaultAsync(s=>s.Id==model.Id);
+           Console.WriteLine(sections);
+           if(sections==null)
+           {
+            return NotFound("Section Not found");
+           }
+           sections.CourseSectionName=model.CourseSectionName;
+           await _context.SaveChangesAsync();
+            return Ok("Section Update Succesfully.");
+        }
+
+        public async Task<IActionResult> GetLessons(int SectionId)
+        {
+          var lessons=  await _context.courseLessons.Where(l=>l.SectionId==SectionId).Select(s=>new CourseLesson{
+                Id=s.Id,
+                CourseLessonName=s.CourseLessonName,
+                ContentUrl=s.ContentUrl,
+                ContentType=s.ContentType
+            }).ToListAsync();
+            return PartialView("_LessonsPartial",lessons);
+        }
+
     }
 }

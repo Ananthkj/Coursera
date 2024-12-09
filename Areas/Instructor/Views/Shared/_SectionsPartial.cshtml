@@ -24,3 +24,43 @@
 
 <!-- Placeholder for Lessons -->
 <div id="lessonsContainer"></div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".view-lessons", function () {
+            const SectionId = $(this).data('id');
+            $.get(`/Instructor/Course/GetLessons?SectionId=${SectionId}`, function (html) {
+                $("#lessonsContainer").html(html);
+            });
+        });
+
+        // Handle "Edit Course" button click
+        $(document).on("click", ".edit-section", function () {
+            const SectionId = $(this).data('id');
+            $.get(`/Instructor/Course/GetSectionEdit?SectionId=${SectionId}`, function (html) {
+                $("#modalContainer").html(html);
+                $('#editSectionModal').modal('show'); // Show the modal if using Bootstrap
+            });
+        });
+
+        $(document).on('submit', '#editSectionForm', function (e) {
+            e.preventDefault(); // Prevents default form submission
+
+            const formData = $(this).serialize(); // Serializes form inputs into a query string
+            console.log(formData);
+
+            $.post('/Instructor/Course/UpdateSection', formData)
+                .done(function (response) {
+                    alert(response); // Success message from the server
+                    location.reload(); // Refresh the page to display updated course list
+                })
+                .fail(function (xhr) {
+                    alert(xhr.responseText); // Show server error message
+                });
+        });
+
+    });
+</script>
