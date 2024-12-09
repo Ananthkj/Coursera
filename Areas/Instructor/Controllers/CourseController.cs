@@ -228,5 +228,42 @@ namespace Coursera.Areas.Instructor.Controllers
             return PartialView("_LessonsPartial",lessons);
         }
 
+        public async Task<IActionResult> GetLessonEdit(int LessonId)
+        {
+          var lessons=  await _context.courseLessons.Where(l=>l.Id==LessonId).Select(l=>new EditLessonViewModel{
+                Id=l.Id,
+                CourseLessonName=l.CourseLessonName,
+                ContentUrl=l.ContentUrl,
+                ContentType=l.ContentType
+            }).FirstOrDefaultAsync();
+
+            if(lessons==null)
+            {
+                return NotFound("Lesson Not Found");
+            }
+
+            return PartialView("_EditLessonModal",lessons);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLesson(EditLessonViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Data");
+            }
+           var lesson= await _context.courseLessons.FirstOrDefaultAsync(l=>l.Id==model.Id);
+           if(lesson==null)
+           {
+            return NotFound("Lesson Not Found");
+           }
+           lesson.CourseLessonName=model.CourseLessonName;
+           lesson.ContentUrl=model.ContentUrl;
+           lesson.ContentType=model.ContentType;
+           await _context.SaveChangesAsync();
+
+            return Ok("Lesson Updated Succesfully");
+        }
+
     }
 }

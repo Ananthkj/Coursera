@@ -27,5 +27,29 @@
 
 
 <script>
-    
+    $(document).ready(function(){
+        $(document).on("click",".edit-lesson",function(){
+          const LessonId=  $(this).data('id');
+          $.get(`/Instructor/Course/GetLessonEdit?LessonId=${LessonId}`,function(html){
+            $("#modalContainer").html(html);
+            $('#editLessonModal').modal('show');
+          });
+        });
+
+        $(document).on("submit","#editLessonForm",function(e){
+            e.preventDefault();
+          const formData= $(this).serialize();
+          console.log(formData);
+          $.post(`/Instructor/Course/UpdateLesson`,formData)
+          .done(function(response){
+            alert(response);
+            location.reload();
+          })
+          .fail(function(xhr){
+            alert(xhr.responseText);
+          });
+        });
+
+
+    });
 </script>

@@ -9,11 +9,11 @@ namespace Coursera.Models
 
         public int SectionId { get; set; }
 
-        public string? CourseLessonName {  get; set; }
+        public string CourseLessonName {  get; set; }
 
-        public string? ContentUrl {  get; set; }
+        public string ContentUrl {  get; set; }
 
-        public string? ContentType {  get; set; }
+        public string ContentType {  get; set; }
 
         public CourseSection? Section { get; set; }
     }

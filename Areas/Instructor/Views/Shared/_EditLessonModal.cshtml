@@ -1,0 +1,34 @@
+@model EditLessonViewModel;
+
+<div class="modal" tabindex="-1" id="editLessonModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editLessonForm">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label for="CourseLessonName" class="form-label">Course Name</label>
+                        <input type="text" class="form-control" id="CourseLessonName" name="CourseLessonName"
+                            value="@Model.CourseLessonName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="ContentUrl" class="form-label">Course Name</label>
+                        <input type="text" class="form-control" id="ContentUrl" name="ContentUrl"
+                            value="@Model.ContentUrl" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="ContentType" class="form-label">Course Name</label>
+                        <input type="text" class="form-control" id="ContentType" name="ContentType"
+                            value="@Model.ContentType" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
