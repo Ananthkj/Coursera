@@ -11,34 +11,75 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var course in Model)
+        @foreach (var course in Model)
         {
             <tr>
                 <td>@course.CourseName</td>
                 <td>@course.CourseDescription</td>
                 <td>@course.ApprovalStatus</td>
                 <td>
-                   <ul>
-                       @foreach(var sections in course.sections)
-                       {
-                           <li>@sections.CourseSectionName
-                           <ul>
-                               @foreach(var lesson in sections.courseLessons)
-                               {
-                                   <l1>@lesson.CourseLessonName</l1>
-                               }
-                           </ul>
-                           </li>
-                       }
-                   </ul>
+                    <button class="btn btn-primary view-sections" data-id="@course.Id">View Sections</button>
+                    <button class="btn btn-secondary edit-course" data-id="@course.Id">Edit</button>
                 </td>
-                <td>
+                @* <td>
                     <a asp-action="EditCourse" asp-route-id="@course.Id">Edit</a>
                     <a asp-action="DeleteCourse" asp-route-id="@course.Id">Delete</a>
-                </td>
+                </td> *@
             </tr>
-       }
-      
-   </tbody>
+        }
+
+    </tbody>
 
 </table>
+
+<!-- Placeholder for Sections -->
+<div id="sectionsContainer" style="margin-top: 20px;"></div>
+
+<!-- Placeholder for Modals -->
+<div id="modalContainer"></div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".view-sections", function () {
+            const CourseId = $(this).data('id');
+            $.get(`/Instructor/Course/GetSections?CourseId=${CourseId}`, function (html) {
+                $("#sectionsContainer").html(html);
+            });
+        });
+
+        // Handle "Edit Course" button click
+        $(document).on("click", ".edit-course", function () {
+            const courseId = $(this).data('id');
+            $.get(`/Instructor/Course/GetCourse?CourseId=${courseId}`, function (html) {
+                $("#modalContainer").html(html);
+                $('#editCourseModal').modal('show'); // Show the modal if using Bootstrap
+            });
+        });
+
+        $(document).on('submit', '#editCourseForm', function (e) {
+            e.preventDefault(); // Prevents default form submission
+
+            const formData = $(this).serialize(); // Serializes form inputs into a query string
+            console.log(formData);
+
+            $.post('/Instructor/Course/UpdateCourse', formData)
+                .done(function (response) {
+                    alert(response); // Success message from the server
+                    location.reload(); // Refresh the page to display updated course list
+                })
+                .fail(function (xhr) {
+                    alert(xhr.responseText); // Show server error message
+                });
+        });
+
+
+
+
+
+    });
+
+
+</script>
