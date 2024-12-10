@@ -1,39 +1,55 @@
 ﻿@model List<Coursera.Models.Course>;
 
-<table>
-    <thead>
-        <tr>
-            <th>Course Name</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Sections</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
-        {
-            <tr>
-                <td>@course.CourseName</td>
-                <td>@course.CourseDescription</td>
-                <td>@course.ApprovalStatus</td>
-                <td>
-                    <button class="btn btn-primary view-sections" data-id="@course.Id">View Sections</button>
-                    <button class="btn btn-secondary edit-course" data-id="@course.Id">Edit</button>
-                </td>
-                @* <td>
-                    <a asp-action="EditCourse" asp-route-id="@course.Id">Edit</a>
-                    <a asp-action="DeleteCourse" asp-route-id="@course.Id">Delete</a>
-                </td> *@
-            </tr>
-        }
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark" >
+                <tr>
+                    <th style="color:white">Course Name</th>
+                    <th style="color:white">Description</th>
+                    <th style="color:white">Status</th>
+                    <th style="color:white">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@course.CourseName</strong></td>
+                        <td>@course.CourseDescription</td>
+                   
+                        <td><span class="badge bg-label-primary me-1">@course.ApprovalStatus</span></td>
+                        <td>
+                              <button class="btn btn-outline-info me-1 view-sections"
+                                type="button"
+                                data-id="@course.Id"
+                                data-bs-toggle="collapse"
+                                    data-bs-target="#multiCollapseExample1"
+                                aria-expanded="false"
+                                    aria-controls="multiCollapseExample1">
+                            View Sections
+                            </button>    
 
-    </tbody>
+                    
+                             <button class="btn btn-outline-warning edit-course" data-id="@course.Id">Edit</button>
+                        </td>
+                    </tr>
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->
 
-</table>
 
+
+
+<div class="collapse multi-collapse" id="multiCollapseExample1">
 <!-- Placeholder for Sections -->
 <div id="sectionsContainer" style="margin-top: 20px;"></div>
+</div>
 
 <!-- Placeholder for Modals -->
 <div id="modalContainer"></div>
@@ -74,11 +90,6 @@
                     alert(xhr.responseText); // Show server error message
                 });
         });
-
-
-
-
-
     });
 
 

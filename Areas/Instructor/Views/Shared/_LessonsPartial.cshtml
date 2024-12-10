@@ -1,30 +1,37 @@
 @model List<Coursera.Models.CourseLesson>;
 
-<h4>Lessons</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Course Lesson Name</th>
-            <th>Content Url</th>
-            <th>Content Type</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var lessons in Model)
-        {
-            <tr>
-                <td>@lessons.CourseLessonName</td>
-                <td>@lessons.ContentUrl</td>
-                <td>@lessons.ContentType</td>
-                <td>
-                    @* <button class="btn btn-primary view-lessons" data-id="@sections.Id">View Lessons</button> *@
-                    <button class="btn btn-secondary edit-lesson" data-id="@lessons.Id">Edit</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color:white">Course Lesson Name</th>
+                    <th style="color:white">Content Url</th>
+                    <th style="color:white">Content Type</th>
+                    <th style="color:white">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var lessons in Model)
+                {
+                    <tr>
+                        
+                        <td>@lessons.CourseLessonName</td>
 
+                        <td>@lessons.ContentUrl</td>
+                        <td>@lessons.ContentType</td>
+                        <td>
+                            <button class="btn btn-outline-warning edit-lesson" data-id="@lessons.Id">Edit</button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->
 
 <script>
     $(document).ready(function(){

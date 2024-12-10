@@ -1,31 +1,50 @@
 @model List<Coursera.Models.CourseSection>
 
-<h4>Sections</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Section Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var sections in Model)
-        {
-            <tr>
-                <td>@sections.CourseSectionName</td>
-                <td>
-                    <button class="btn btn-primary view-lessons" data-id="@sections.Id">View Lessons</button>
-                    <button class="btn btn-secondary edit-section" data-id="@sections.Id">Edit</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th style="color:white">Section Name</th>
+                    <th style="color:white">Actions</th>
+                    
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var sections in Model)
+                {
+                    <tr>                    
+                        <td>@sections.CourseSectionName</td>
+                        <td>
+                            <button class="btn btn-outline-info me-1 view-lessons"
+                                    type="button"
+                                    data-id="@sections.Id"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#multiCollapseExample2"
+                                    aria-expanded="false"
+                                    aria-controls="multiCollapseExample2">
+                                View Lessons
+                            </button>
+
+
+                            <button class="btn btn-outline-warning edit-course" data-id="@sections.Id">Edit</button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Basic Bootstrap Table -->
+
+<div class="collapse multi-collapse" id="multiCollapseExample2">
 <!-- Placeholder for Lessons -->
 <div id="lessonsContainer"></div>
 
-
+</div>
 
 
 <script>
