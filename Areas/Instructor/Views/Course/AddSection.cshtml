@@ -1,9 +1,16 @@
 ﻿@model AddSectionViewModel;
 
-<h1>Add Section</h1>
-<form action="AddSection" method="post">
-    <input type="hidden" asp-for="CourseId" />
-    <label asp-for="CourseSectionName">CourseSectionName: </label>
-    <input asp-for="CourseSectionName" /><br /> <br />
-    <button type="submit">Next</button>
+<h2>Add Section</h2>
+<form asp-action="AddSection" method="post">
+    <div class="mb-3">
+        <label for="CourseId" class="form-label">Select Course</label>
+        <select asp-for="CourseId" asp-items="ViewBag.courses" class="form-control">
+            <option value="">-- Select a Course --</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="CourseSectionName" class="form-label">Section Name</label>
+        <input type="text" name="CourseSectionName" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Section</button>
 </form>
