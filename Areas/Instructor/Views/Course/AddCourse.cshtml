@@ -1,7 +1,7 @@
 ﻿@model AddCourseViewModel;
 
 
-<h1>Add New Course</h1>
+@* <h1>Add New Course</h1>
 <form action="AddCourse" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <label asp-for="CourseName">Course Name: </label>
@@ -10,4 +10,65 @@
     <input type="text" asp-for="CourseDescription" /><br /><br />
 
     <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+</form> *@
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-md container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Course Section/</span> Add Course</h4>
+
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row" style="display:flex; align-items:center;justify-content:center">
+            <!-- Basic Layout -->
+            <div class="col-6">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Add Course</h5>
+                       
+                    </div>
+                    <div class="card-body">
+                        <form action="AddCourse" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" asp-for="CourseName">Course Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" asp-for="CourseName" class="form-control" id="basic-default-name" placeholder="John Doe" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="basic-default-company">Company</label>
+                                <div class="col-sm-10">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="basic-default-company"
+                                           placeholder="ACME Inc." />
+                                </div>
+                            </div>
+                        
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" asp-for="CourseDescription">Message</label>
+                                <div class="col-sm-10">
+                                    <textarea id="basic-default-message"
+                                              class="form-control"
+                                              asp-for="CourseDescription"
+                                              placeholder="Course Description"
+                                              aria-label="Hi, Do you have a moment to talk Joe?"
+                                              aria-describedby="basic-icon-default-message2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Add Course</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic with Icons -->
+        </div>
+    </div>
+    </div>
+    <!-- / Content -->
