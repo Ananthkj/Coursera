@@ -21,6 +21,8 @@ namespace Coursera.Data
 
         public DbSet<CourseLesson> courseLessons { get; set; }
 
+        public DbSet<UserProfile> userProfiles { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
           
@@ -30,13 +32,46 @@ namespace Coursera.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.Profile)
+            .WithOne(p => p.user)
+            .HasForeignKey<UserProfile>(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        }
+
+
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Role>().HasData(
-                new Role { Id=1,RoleName="Admin"},
-                new Role { Id=2,RoleName="Instructor"},
-                new Role { Id=3,RoleName="Student"}
+                new Role { Id = 1, RoleName = "Admin" },
+                new Role { Id = 2, RoleName = "Instructor" },
+                new Role { Id = 3, RoleName = "Student" }
                 );
-        }
+        }*/
+
+        /*  protected override void OnModelCreating(ModelBuilder modelBuilder)
+          {
+              base.OnModelCreating(modelBuilder);
+              modelBuilder.Entity<UserProfile>().HasData(
+                  new UserProfile()
+                  {
+                      Id = 1,
+                      Photo = "path/to/photo1.jpg",
+                      Subject = "Computer Science",
+                      UserId = 1, // Assuming you have a User with Id = 1
+                      Website = "https://www.example.com",
+                      Twitter = "https://twitter.com/user1",
+                      Facebook = "https://www.facebook.com/user1",
+                      LinkedIn = "https://www.linkedin.com/in/user1",
+                      Instagram = "https://www.instagram.com/user1"
+                  }
+                  );
+
+          }*/
+
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

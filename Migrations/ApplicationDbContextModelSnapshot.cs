@@ -95,12 +95,15 @@ namespace Coursera.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ContentType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContentUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseLessonName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SectionId")
@@ -143,29 +146,11 @@ namespace Coursera.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("RoleName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RoleName = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            RoleName = "Instructor"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            RoleName = "Student"
-                        });
                 });
 
             modelBuilder.Entity("Coursera.Models.UniversityFormModel", b =>
@@ -248,6 +233,46 @@ namespace Coursera.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("Coursera.Models.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedIn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("userProfiles");
+                });
+
             modelBuilder.Entity("Coursera.Models.newStudent", b =>
                 {
                     b.Property<int>("Id")
@@ -321,6 +346,17 @@ namespace Coursera.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Coursera.Models.UserProfile", b =>
+                {
+                    b.HasOne("Coursera.Models.User", "user")
+                        .WithOne("Profile")
+                        .HasForeignKey("Coursera.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("Coursera.Models.Course", b =>
                 {
                     b.Navigation("sections");
@@ -334,6 +370,11 @@ namespace Coursera.Migrations
             modelBuilder.Entity("Coursera.Models.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Coursera.Models.User", b =>
+                {
+                    b.Navigation("Profile");
                 });
 #pragma warning restore 612, 618
         }
