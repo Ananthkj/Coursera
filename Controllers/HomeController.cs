@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Coursera.Models;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Coursera.Controllers
 {

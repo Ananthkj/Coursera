@@ -1,7 +1,13 @@
 ﻿@model List<Coursera.Models.Course>;
 
 <!-- Basic Bootstrap Table -->
-<div class="card">
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Course Section /</span> All Courses</h4>
+    <div class="card">
     <div class="table-responsive text-nowrap">
         <table class="table">
             <thead class="table-dark" >
@@ -41,18 +47,21 @@
         </table>
     </div>
 </div>
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <!-- Placeholder for Sections -->
+            <div id="sectionsContainer" style="margin-top: 20px;"></div>
+        </div>
+
+        <!-- Placeholder for Modals -->
+        <div id="modalContainer"></div>
+    </div>
+</div>
 <!--/ Basic Bootstrap Table -->
 
 
 
 
-<div class="collapse multi-collapse" id="multiCollapseExample1">
-<!-- Placeholder for Sections -->
-<div id="sectionsContainer" style="margin-top: 20px;"></div>
-</div>
 
-<!-- Placeholder for Modals -->
-<div id="modalContainer"></div>
 
 
 

@@ -1,6 +1,6 @@
 ﻿@model AddLessonViewModel;
 
-<form asp-action="AddLesson" method="post">
+@* <form asp-action="AddLesson" method="post">
     <div class="form-group">
         <label for="CourseId">Select Course</label>
         <select id="CourseId" asp-items="ViewBag.courses" class="form-control">
@@ -35,7 +35,89 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Add Lesson</button>
-</form>
+</form> *@
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-md container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Course Section/</span> Add Lesson</h4>
+
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row" style="display:flex; align-items:center;justify-content:center">
+            <!-- Basic Layout -->
+            <div class="col-6">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Add Lesson</h5>
+
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="AddLesson" method="post">
+
+                            <div class="mb-3">
+                                <label for="CourseId" class="form-label">Select Course</label>
+                                <select id="CourseId" asp-items="ViewBag.courses" class="form-select">
+                                    <option value="">-- Select a Course --</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="SectionId" class="form-label">Select Section</label>
+                                <select id="SectionId" asp-for="SectionId" class="form-select">
+                                    <option value="">-- Select a Section --</option>
+                                </select>
+                                <span asp-validation-for="SectionId" class="text-danger"></span>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="CourseLessonName">Lesson Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" asp-for="CourseLessonName" class="form-control" id="basic-default-name" placeholder="Lesson1" />
+                                    <span asp-validation-for="CourseLessonName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="ContentUrl" class="col-md-2 col-form-label">URL</label>
+                                <div class="col-md-10">
+                                    <input class="form-control"
+                                           type="url"
+                                           asp-for="ContentUrl"
+                                           id="html5-url-input" />
+                                 <span asp-validation-for="ContentUrl" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="ContentType">Content Type</label>
+                                <div class="col-sm-10">
+                                    <input type="text" asp-for="ContentType" class="form-control" id="basic-default-name" placeholder="pdf,mp4" />
+                                    <span asp-validation-for="ContentType" class="text-danger"></span>
+                                </div>
+                            </div>
+                           
+                            <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Add Lesson</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic with Icons -->
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+
+
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>

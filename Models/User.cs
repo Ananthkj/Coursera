@@ -19,5 +19,7 @@ namespace Coursera.Models
         //Single entity means single role can be given
         public Role? Role { get; set; }
 
+        public UserProfile? Profile { get; set; }
+
     }
 }

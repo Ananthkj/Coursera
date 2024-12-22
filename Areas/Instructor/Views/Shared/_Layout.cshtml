@@ -116,22 +116,27 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Account Settings</div>
+                            <div data-i18n="Account Settings">Course Section</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="pages-account-settings-account.html" class="menu-link">
-                                    <div data-i18n="Account">Account</div>
+                                <a href="@Url.Action("AddCourse","Course",new{area="Instructor"})" class="menu-link">
+                                    <div data-i18n="Account">Add Course</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="pages-account-settings-notifications.html" class="menu-link">
-                                    <div data-i18n="Notifications">Notifications</div>
+                                <a href="@Url.Action("AddSection","Course",new{area="Instructor"})" class="menu-link">
+                                    <div data-i18n="Notifications">Add Section</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="pages-account-settings-connections.html" class="menu-link">
-                                    <div data-i18n="Connections">Connections</div>
+                                <a href="@Url.Action("AddLesson","Course",new{area="Instructor"})" class="menu-link">
+                                    <div data-i18n="Connections">Add Lesson</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="@Url.Action("MyCourses","Course",new{area="Instructor"})" class="menu-link">
+                                    <div data-i18n="Connections">My Courses</div>
                                 </a>
                             </li>
                         </ul>
