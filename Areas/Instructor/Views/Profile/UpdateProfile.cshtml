@@ -1,0 +1,61 @@
+﻿@model Coursera.Areas.Instructor.Models.MyProfileModel;
+
+<h1>Update Profile: </h1>
+<form asp-action="UpdateProfile" asp-controller="Profile" method="post">
+    <input type="hidden" asp-for="UserId" />
+
+    <div>
+        <label asp-for="UserName">UserName:</label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" readonly /> <!-- Email cannot be edited -->
+    </div>
+
+    <div>
+        <label asp-for="Photo">Photo:</label>
+        <input asp-for="Photo" />
+        <span asp-validation-for="Photo" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Subject">Subject:</label>
+        <input asp-for="Subject" />
+        <span asp-validation-for="Subject" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Website">Website:</label>
+        <input asp-for="Website" />
+        <span asp-validation-for="Website" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Twitter">Twitter:</label>
+        <input asp-for="Twitter" />
+        <span asp-validation-for="Twitter" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Facebook">Facebook:</label>
+        <input asp-for="Facebook" />
+        <span asp-validation-for="Facebook" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="LinkedIn">LinkedIn:</label>
+        <input asp-for="LinkedIn" />
+        <span asp-validation-for="LinkedIn" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Instagram">Instagram:</label>
+        <input asp-for="Instagram" />
+        <span asp-validation-for="Instagram" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn-primary">Update</button>
+
+</form>

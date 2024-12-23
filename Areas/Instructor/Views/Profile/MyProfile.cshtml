@@ -4,6 +4,8 @@
 
 @* @foreach(var profile in Model) *@
 @* { *@
+
+    <form action="/" method="get">
     <p>Username: @Model.UserName</p>
     <p>Email: @Model.Email</p>
     <p>Photo: @Model.Photo</p>
@@ -11,8 +13,17 @@
     <p>UserId: @Model.UserId</p>
     <p>Website: @Model.Website</p>
     <p>Twitter: @Model.Twitter</p>
-     <p>Facebook: @Model.Facebook</p>
+    <p>Facebook: @Model.Facebook</p>
     <p>LinkedIn: @Model.LinkedIn</p>
     <p>Instagram: @Model.Instagram</p>
+    <button 
+        type="submit"
+        formaction="@Url.Action("UpdateProfile","Profile")">
+        Edit
+    </button>
+    
+    </form>
+
+    
 @* } *@
 
