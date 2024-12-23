@@ -51,5 +51,25 @@ namespace Coursera.Services.SeedService
             }
 
         }
+
+        public void Seed2()
+        {
+            if(!_context.userProfiles.Any())
+            {
+                var userProfile = new UserProfile()
+                {
+                    Photo = "path/to/photo1.jpg",
+                    Subject = "Web Development",
+                    UserId = 2,
+                    Website = "https://www.example.com",
+                    Twitter = "https://twitter.com/user1",
+                    Facebook = "https://www.facebook.com/user1",
+                    LinkedIn = "https://www.linkedin.com/in/user1",
+                    Instagram = "https://www.instagram.com/user1"
+                };
+                _context.userProfiles.Add(userProfile);
+                _context.SaveChanges();
+            }
+        }
     }
 }

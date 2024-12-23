@@ -91,6 +91,7 @@ using (var scope=app.Services.CreateScope())
 {
   var seedService=  scope.ServiceProvider.GetRequiredService<SeedService>();
     seedService.Seed();
+    seedService.Seed2();
 }
 
 app.MapControllerRoute(
