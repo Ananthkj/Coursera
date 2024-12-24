@@ -1,7 +1,35 @@
 ﻿@model Coursera.Areas.Instructor.Models.MyProfileModel;
 
 <h1>Update Profile: </h1>
-<form asp-action="UpdateProfile" asp-controller="Profile" method="post">
+<div class="card-body">
+    <div class="d-flex align-items-start align-items-sm-center gap-4">
+        <img src="@Model.Photo"
+             alt="user-avatar"
+             class="d-block rounded"
+             height="100"
+             width="100"
+             id="uploadedAvatar" />
+        <div class="button-wrapper">
+            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                <span class="d-none d-sm-block">Upload new photo</span>
+                <i class="bx bx-upload d-block d-sm-none"></i>
+                <input type="file"
+                       id="upload"
+                       class="account-file-input"
+                       hidden
+                       accept="image/png, image/jpeg"
+                       onchange="uploadImage()" />
+            </label>
+            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                <i class="bx bx-reset d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Reset</span>
+            </button>
+            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+        </div>
+    </div>
+</div>
+
+<form asp-action="UpdateProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="UserId" />
 
     <div>
@@ -9,15 +37,19 @@
         <input asp-for="UserName" />
         <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
+    <div>
+        <label asp-for="RoleName">UserRole:</label>
+        <input asp-for="RoleName" readonly disabled/>
+    </div>
 
     <div>
         <label asp-for="Email">Email:</label>
-        <input asp-for="Email" readonly /> <!-- Email cannot be edited -->
+        <input asp-for="Email" readonly disabled/> <!-- Email cannot be edited -->
     </div>
 
     <div>
         <label asp-for="Photo">Photo:</label>
-        <input asp-for="Photo" />
+        <input type="file" asp-for="Photo" />
         <span asp-validation-for="Photo" class="text-danger"></span>
     </div>
 
@@ -59,3 +91,43 @@
     <button type="submit" class="btn-primary">Update</button>
 
 </form>
+
+
+<script>
+        function uploadImage() {
+      const fileInput = document.getElementById('upload');
+      const uploadedAvatar = document.getElementById('uploadedAvatar');
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('photo', fileInput.files[0]); // The key 'photo' must match the server-side parameter
+
+        // Send AJAX request to upload the file
+        fetch('/Instructor/Profile/UploadPhoto', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to upload image');
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Update the image source dynamically
+            if (data.success && data.imageUrl) {
+              uploadedAvatar.src = data.imageUrl;
+            } else {
+              alert('Image upload failed');
+            }
+          })
+          .catch(error => {
+            console.error('Error uploading image:', error);
+            alert('An error occurred while uploading the image.');
+          });
+      } else {
+        alert('Please select an image to upload.');
+      }
+    }
+
+</script>

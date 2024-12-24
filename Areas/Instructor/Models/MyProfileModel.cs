@@ -6,6 +6,8 @@ namespace Coursera.Areas.Instructor.Models
     {
         public string? UserName {  get; set; }
 
+        public string? RoleName {  get; set; }
+
         public string? Email {  get; set; }
         public string? Photo { get; set; }
 

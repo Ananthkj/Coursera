@@ -5,6 +5,7 @@ using Coursera.Services.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 using System.Security.Claims;
 
 namespace Coursera.Areas.Instructor.Controllers
@@ -89,7 +90,6 @@ namespace Coursera.Areas.Instructor.Controllers
                     return NotFound("User Profile Not Found");
                 }
                 userProfile.user.Name= model.UserName;
-                userProfile.Photo = model.Photo;
                 userProfile.Subject = model.Subject;
                 userProfile.Website = model.Website;
                 userProfile.Twitter = model.Twitter;
@@ -103,7 +103,108 @@ namespace Coursera.Areas.Instructor.Controllers
             
             return View(model);
         }
+        //C:\Users\jayso\source\repos\CourseraNew\.vs\wwwroot\assets2\img\Profile\Instructor\
 
-       
+        [HttpPost]
+        public async Task<IActionResult> UploadPhoto(IFormFile photo)
+        {
+            if (photo != null && photo.Length > 0)
+            {
+                // Validate file type and size
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(photo.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest(new { success = false, message = "Invalid file type." });
+                }
+                if (photo.Length > 800 * 1024) // 800 KB max
+                {
+                    return BadRequest(new { success = false, message = "File size exceeds the limit." });
+                }
+
+                // Save the file to wwwroot/uploads (create the folder if it doesn't exist)
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets2/img/Profile/Instructor");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await photo.CopyToAsync(stream);
+                }
+
+                // Generate the URL for the saved image
+                var imageUrl = Url.Content("~/assets2/img/Profile/Instructor/" + uniqueFileName);
+
+                var UserClaimId = User.Claims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier);
+                /*int? InstructorId = int.Parse(UserClaimId.Value);*/
+                bool InstructorId = int.TryParse(UserClaimId.Value, out int UserId);
+
+                //var MyProfile= _context.userProfiles.Where(u => u.user.Id == InstructorId).Select(u => new { Name=u.user?.Name??null,Email=u.user?.Email??null}).ToList();         
+                if (UserClaimId == null || !InstructorId)
+                {
+                    return NotFound("Instructor Id is Null");
+                }
+                var userProfile = _context.userProfiles
+               .Include(u => u.user)
+               .Where(u => u.user.Id == UserId)
+               .FirstOrDefault();
+                if (userProfile == null)
+                {
+                    return NotFound("User Profile Not Found");
+                }
+                userProfile.Photo = imageUrl;
+
+                _context.SaveChanges();
+
+                return Ok(new { success = true, imageUrl });
+            }
+
+            return BadRequest(new { success = false, message = "No file uploaded." });
+        }
+
+
+        /*public async Task<IActionResult> UploadPhoto(IFormFile photo)
+        {
+            if(photo!=null && photo.Length>0)
+            {
+                // Validate file type and size
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(photo.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest(new { success = false, message = "Invalid file type." });
+                }
+                if (photo.Length > 800 * 1024) // 800 KB max
+                {
+                    return BadRequest(new { success = false, message = "File size exceeds the limit." });
+                }
+                // Save the file to wwwroot/uploads (create the folder if it doesn't exist)
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets2/img/Profile/Instructor/");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+                var fileName = Guid.NewGuid().ToString() + "_" + photo.FileName + extension;
+                var filePath=Path.Combine(uploadsFolder, fileName);
+                using (var fileStream=new FileStream(filePath,FileMode.Create))
+                {
+                    await photo.CopyToAsync(fileStream);
+                }
+                var imageUrl = Url.Content("~/Instructor/" + fileName);
+
+                return Ok(new { success = true, imageUrl });
+
+            }
+            else
+            {
+                return BadRequest(new {succes=false,message="No file Uploaded"});
+            }
+            
+        }*/
+
     }
 }

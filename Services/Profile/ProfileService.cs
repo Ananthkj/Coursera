@@ -20,6 +20,7 @@ namespace Coursera.Services.Profile
                 .Select(u => new MyProfileModel
                 {
                     UserName = u.user.Name,
+                    RoleName=u.user.Role.RoleName,
                     Email = u.user.Email,
                     Photo = u.Photo,
                     Subject = u.Subject,
