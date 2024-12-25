@@ -1,0 +1,194 @@
+﻿@model Coursera.Areas.Instructor.Models.MyProfileModel;
+
+@* <h1>Update Profile: </h1>
+<div class="card-body">
+    <div class="d-flex align-items-start align-items-sm-center gap-4">
+        <img src="@Model.Photo"
+             alt="user-avatar"
+             class="d-block rounded"
+             height="100"
+             width="100"
+             id="uploadedAvatar" />
+        <div class="button-wrapper">
+            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                <span class="d-none d-sm-block">Upload new photo</span>
+                <i class="bx bx-upload d-block d-sm-none"></i>
+                <input type="file"
+                       id="upload"
+                       class="account-file-input"
+                       hidden
+                       accept="image/png, image/jpeg"
+                       onchange="uploadImage()" />
+            </label>
+            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                <i class="bx bx-reset d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Reset</span>
+            </button>
+            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+        </div>
+    </div>
+</div> *@
+
+
+
+    
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-md-12">                    
+                    <div class="card mb-4">
+                        <h5 class="card-header">Profile Details</h5>
+                        <!-- Account -->
+                        <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                <img src="@Model.Photo"
+                                     alt="user-avatar"
+                                     class="d-block rounded"
+                                     height="100"
+                                     width="100"
+                                     id="uploadedAvatar" />
+                                <div class="button-wrapper">
+                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                        <span class="d-none d-sm-block">Upload new photo</span>
+                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                        <input type="file"
+                                               id="upload"
+                                               class="account-file-input"
+                                               hidden
+                                               accept="image/png, image/jpeg" />
+                                    </label>
+                                  @*   <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                        <i class="bx bx-reset d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Reset</span>
+                                    </button> *@
+
+                                    <p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-0" />
+                        <div class="card-body">
+                        <form asp-action="UpdateProfile" asp-controller="Profile" method="POST">
+                                <input type="hidden" asp-for="UserId" />
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="UserName" class="form-label">Name</label>
+                                        <input class="form-control"
+                                               type="text"
+                                               asp-for=UserName
+                                               autofocus />
+                                    </div>
+                                <div class="mb-3 col-md-6">
+                                    <label asp-for="RoleName" class="form-label">Role</label>
+                                    <input class="form-control"
+                                           type="text"
+                                           asp-for=RoleName
+                                           disabled
+                                           readonly
+                                           autofocus />
+                                </div>
+                                   
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Email" class="form-label">E-mail</label>
+                                        <input class="form-control"
+                                               type="text"
+                                               id="email"
+                                               asp-for="Email"
+                                               disabled
+                                               readonly
+                                               placeholder="john.doe@example.com" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Subject" class="form-label">Subject</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="organization"
+                                                asp-for="Subject"/>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Twitter" class="form-label">Twitter</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.Twitter.com/in/yourusername]"
+                                               asp-for="Twitter" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="LinkedIn" class="form-label">LinkedIn</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.linkedin.com/in/yourusername]"
+                                               asp-for="LinkedIn" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Instagram" class="form-label">Instagram</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.Instagram.com/in/yourusername]"
+                                               asp-for="Instagram" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                    <label asp-for="Facebook" class="form-label">Facebook</label>
+                                        <input type="text"
+                                               class="form-control"
+                                           placeholder="[https://www.Facebook.com/in/yourusername]"
+                                           asp-for="Facebook" />
+                                    </div>
+                                    
+                                </div>
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                <button type="submit" formaction="@Url.Action("MyProfile", "Profile", new { area = "Instructor" })" class="btn btn-outline-secondary">Cancel</button>
+                            </div>
+                            </form>
+                        </div>
+                        <!-- /Account -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- / Content -->
+
+
+<script>
+        function uploadImage() {
+      const fileInput = document.getElementById('upload');
+      const uploadedAvatar = document.getElementById('uploadedAvatar');
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('photo', fileInput.files[0]); // The key 'photo' must match the server-side parameter
+
+        // Send AJAX request to upload the file
+        fetch('/Instructor/Profile/UploadPhoto', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to upload image');
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Update the image source dynamically
+            if (data.success && data.imageUrl) {
+              uploadedAvatar.src = data.imageUrl;
+            } else {
+              alert('Image upload failed');
+            }
+          })
+          .catch(error => {
+            console.error('Error uploading image:', error);
+            alert('An error occurred while uploading the image.');
+          });
+      } else {
+        alert('Please select an image to upload.');
+      }
+    }
+
+</script>

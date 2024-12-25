@@ -2,6 +2,7 @@ using Coursera.Data;
 using Coursera.Models;
 using Coursera.Services.Email;
 using Coursera.Services.Folder;
+using Coursera.Services.Profile;
 using Coursera.Services.SeedService;
 using Coursera.Services.SignUp;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -66,6 +67,7 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<IUsersService,UserService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 
@@ -91,6 +93,7 @@ using (var scope=app.Services.CreateScope())
 {
   var seedService=  scope.ServiceProvider.GetRequiredService<SeedService>();
     seedService.Seed();
+    //seedService.Seed2();
 }
 
 app.MapControllerRoute(
