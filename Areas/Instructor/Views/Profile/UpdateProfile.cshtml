@@ -1,6 +1,6 @@
 ﻿@model Coursera.Areas.Instructor.Models.MyProfileModel;
 
-<h1>Update Profile: </h1>
+@* <h1>Update Profile: </h1>
 <div class="card-body">
     <div class="d-flex align-items-start align-items-sm-center gap-4">
         <img src="@Model.Photo"
@@ -27,70 +27,131 @@
             <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
         </div>
     </div>
-</div>
+</div> *@
 
-<form asp-action="UpdateProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="UserId" />
 
-    <div>
-        <label asp-for="UserName">UserName:</label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
-    </div>
-    <div>
-        <label asp-for="RoleName">UserRole:</label>
-        <input asp-for="RoleName" readonly disabled/>
-    </div>
 
-    <div>
-        <label asp-for="Email">Email:</label>
-        <input asp-for="Email" readonly disabled/> <!-- Email cannot be edited -->
-    </div>
+    
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
 
-    <div>
-        <label asp-for="Photo">Photo:</label>
-        <input type="file" asp-for="Photo" />
-        <span asp-validation-for="Photo" class="text-danger"></span>
-    </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-md-12">                    
+                    <div class="card mb-4">
+                        <h5 class="card-header">Profile Details</h5>
+                        <!-- Account -->
+                        <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                <img src="@Model.Photo"
+                                     alt="user-avatar"
+                                     class="d-block rounded"
+                                     height="100"
+                                     width="100"
+                                     id="uploadedAvatar" />
+                                <div class="button-wrapper">
+                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                        <span class="d-none d-sm-block">Upload new photo</span>
+                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                        <input type="file"
+                                               id="upload"
+                                               class="account-file-input"
+                                               hidden
+                                               accept="image/png, image/jpeg" />
+                                    </label>
+                                  @*   <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                        <i class="bx bx-reset d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Reset</span>
+                                    </button> *@
 
-    <div>
-        <label asp-for="Subject">Subject:</label>
-        <input asp-for="Subject" />
-        <span asp-validation-for="Subject" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Website">Website:</label>
-        <input asp-for="Website" />
-        <span asp-validation-for="Website" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Twitter">Twitter:</label>
-        <input asp-for="Twitter" />
-        <span asp-validation-for="Twitter" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Facebook">Facebook:</label>
-        <input asp-for="Facebook" />
-        <span asp-validation-for="Facebook" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="LinkedIn">LinkedIn:</label>
-        <input asp-for="LinkedIn" />
-        <span asp-validation-for="LinkedIn" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Instagram">Instagram:</label>
-        <input asp-for="Instagram" />
-        <span asp-validation-for="Instagram" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn-primary">Update</button>
-
-</form>
+                                    <p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-0" />
+                        <div class="card-body">
+                        <form asp-action="UpdateProfile" asp-controller="Profile" method="POST">
+                                <input type="hidden" asp-for="UserId" />
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="UserName" class="form-label">Name</label>
+                                        <input class="form-control"
+                                               type="text"
+                                               asp-for=UserName
+                                               autofocus />
+                                    </div>
+                                <div class="mb-3 col-md-6">
+                                    <label asp-for="RoleName" class="form-label">Role</label>
+                                    <input class="form-control"
+                                           type="text"
+                                           asp-for=RoleName
+                                           disabled
+                                           readonly
+                                           autofocus />
+                                </div>
+                                   
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Email" class="form-label">E-mail</label>
+                                        <input class="form-control"
+                                               type="text"
+                                               id="email"
+                                               asp-for="Email"
+                                               disabled
+                                               readonly
+                                               placeholder="john.doe@example.com" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Subject" class="form-label">Subject</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="organization"
+                                                asp-for="Subject"/>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Twitter" class="form-label">Twitter</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.Twitter.com/in/yourusername]"
+                                               asp-for="Twitter" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="LinkedIn" class="form-label">LinkedIn</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.linkedin.com/in/yourusername]"
+                                               asp-for="LinkedIn" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Instagram" class="form-label">Instagram</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               placeholder="[https://www.Instagram.com/in/yourusername]"
+                                               asp-for="Instagram" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                    <label asp-for="Facebook" class="form-label">Facebook</label>
+                                        <input type="text"
+                                               class="form-control"
+                                           placeholder="[https://www.Facebook.com/in/yourusername]"
+                                           asp-for="Facebook" />
+                                    </div>
+                                    
+                                </div>
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                                <button type="submit" formaction="@Url.Action("MyProfile", "Profile", new { area = "Instructor" })" class="btn btn-outline-secondary">Cancel</button>
+                            </div>
+                            </form>
+                        </div>
+                        <!-- /Account -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- / Content -->
 
 
 <script>

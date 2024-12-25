@@ -1,36 +1,81 @@
 ﻿@model Coursera.Areas.Instructor.Models.MyProfileModel
 
-<h1>List of Profile</h1>
-
-@* @foreach(var profile in Model) *@
-@* { *@
-
-    <form action="/" method="get">
-    <img src="~/assets2/img/Profile/Instructor/5.png"
-         alt="user-avatar"
-         class="d-block rounded"
-         height="100"
-         width="100"
-         id="uploadedAvatar" />
-    <p>Username: @Model.UserName</p>
-    <p>UserRole: @Model.RoleName</p>
-    <p>Email: @Model.Email</p>
-    <p>Photo: @Model.Photo</p>
-    <p>Subject: @Model.Subject</p>
-    <p>UserId: @Model.UserId</p>
-    <p>Website: @Model.Website</p>
-    <p>Twitter: @Model.Twitter</p>
-    <p>Facebook: @Model.Facebook</p>
-    <p>LinkedIn: @Model.LinkedIn</p>
-    <p>Instagram: @Model.Instagram</p>
-    <button 
-        type="submit"
-        formaction="@Url.Action("UpdateProfile","Profile")">
-        Edit
-    </button>
+<div class="row flex justify-content-center align-items-center" style="display:flex;justify-content:center;align-items:center">
+    <!-- Display headings -->
+    <div class="col-md" style="display:flex;justify-content:start;align-items:start;margin-top:10px">
+        <div class="col-md-8" style="display:flex;justify-content:center;align-items:start;margin-top:10px">
+        <div class="card mb-4">
+            <h5 class="card-header">Profile Details</h5>
+            <table class="table table-borderless">
+                <tbody>
+                    
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Username:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.UserName</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">UserRole:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.RoleName</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Email:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Email</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Subject:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Subject</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Website:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Website</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Twitter:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Twitter</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Facebook:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Facebook</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">Instagram:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.Instagram</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle"><small class="text-light fw-semibold">LinkedIn:</small></td>
+                        <td class="py-3">
+                            <h1 class="display-6 mb-0">@Model.LinkedIn</h1>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="padding:5px 0px 5px 20px">
+                    <form>
+                        <button type="submit" formaction="@Url.Action("UpdateProfile", "Profile", new { area= "Instructor"})" class="btn btn-primary me-2">Edit</button>
+                    </form>
+            </div>
+                
+                
+        </div>
+        
+    </div>
+</div>
+</div>
     
-    </form>
-
-    
-@* } *@
 
