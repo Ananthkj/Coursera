@@ -1,10 +1,17 @@
 ﻿
 @model Coursera.Areas.Instructor.Models.MyProfileModel;
 
-@{
+@* @{
     var userPhoto = Model?.Photo ?? "/assets2/img/Profile/Instructor/5.png";
     var userName = Model?.UserName ?? "User";
     var roleName = Model?.RoleName ?? "Guest";
+} *@
+
+@{
+    
+    var userPhoto = ViewData["UserPhoto"] as string ?? "/assets2/img/default-avatar.png";
+    var userName = ViewData["UserName"] as string ?? "User";
+    var roleName = ViewData["RoleName"] as string ?? "Guest";
 }
 
 <!DOCTYPE html>

@@ -1,4 +1,5 @@
 ﻿using Coursera.Areas.Instructor.Models;
+using Coursera.Controllers;
 using Coursera.Data;
 using Coursera.Models;
 using Coursera.Models.Account;
@@ -16,12 +17,12 @@ namespace Coursera.Areas.Instructor.Controllers
 {
     [Area("Instructor")]
     [Authorize(Roles = "Instructor")]
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
          private readonly IUsersService _usersService;
-        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService) 
+        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService): base(profileService)
         { 
             _context = context;
             _profileService = profileService;
@@ -29,8 +30,9 @@ namespace Coursera.Areas.Instructor.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //await SetLayoutDataAsync();
             return View();
         }
 

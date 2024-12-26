@@ -14,6 +14,7 @@ namespace Coursera.Services.Profile
 
         public async Task<MyProfileModel> GetProfile(int InstructorUserId)
         {
+
             var newMyProfile = await _context.userProfiles
                 .Include(u => u.user) // Include the related user
                 .Where(u => u.user.Id == InstructorUserId) // Filter by InstructorId
