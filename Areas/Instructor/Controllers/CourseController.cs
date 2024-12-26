@@ -1,6 +1,7 @@
 ﻿using Coursera.Areas.Instructor.Models;
 using Coursera.Data;
 using Coursera.Models;
+using Coursera.Services.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,13 +15,45 @@ namespace Coursera.Areas.Instructor.Controllers
     public class CourseController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public CourseController(ApplicationDbContext Context)
+        private readonly IProfileService _profileService;
+        public CourseController(ApplicationDbContext Context,IProfileService profileService)
         {
             this._context = Context;
+            this._profileService = profileService;
         }
-        public IActionResult Index()
+        /*public async Task<IActionResult> Index()
         {
-            return View();
+            var instructorId = GetInstructorId();
+            var userProfile =await _profileService.GetProfile(instructorId);
+            return View(userProfile);
+        }*/
+        public async Task<IActionResult> Index()
+        {
+            var instructorId = GetInstructorId(); // Fetch the instructor ID
+            var userProfile = await _profileService.GetProfile(instructorId); // Get profile data
+            var courses = await _context.courses
+                .Where(c => c.InstructorId == instructorId)
+                .Include(c => c.sections)
+                .ThenInclude(s => s.courseLessons)
+                .ToListAsync(); // Fetch associated courses
+
+            var model = new MyProfileModel
+            {
+                UserName = userProfile.UserName,
+                RoleName = userProfile.RoleName,
+                Email = userProfile.Email,
+                Photo = userProfile.Photo,
+                Subject = userProfile.Subject,
+                UserId = userProfile.UserId,
+                Website = userProfile.Website,
+                Twitter = userProfile.Twitter,
+                Facebook = userProfile.Facebook,
+                LinkedIn = userProfile.LinkedIn,
+                Instagram = userProfile.Instagram,
+                Courses = courses // Include courses
+            };
+
+            return View(model);
         }
 
         //Add Courses Single-Step Process
@@ -132,16 +165,15 @@ namespace Coursera.Areas.Instructor.Controllers
                 .ThenInclude(s => s.courseLessons)
                 .ToListAsync();
 
-            var profile = new MyProfileModel
+         /*   var profile = new MyProfileModel
             {
                 Photo = "/assets2/img/sample-avatar.png", // Replace with actual photo path
                 UserName = "Instructor Name",            // Replace with actual username
                 RoleName = "Instructor"                  // Replace with actual role name
-            };
+            };*/
 
-            var viewModel = new MyCoursesViewModel
-            {
-                Profile = profile,
+            var viewModel = new MyProfileModel
+            {               
                 Courses = courses
             };
 

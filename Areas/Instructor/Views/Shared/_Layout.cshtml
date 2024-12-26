@@ -1,9 +1,12 @@
-﻿@model Coursera.Models.MyCoursesViewModel;
+﻿
+@model Coursera.Areas.Instructor.Models.MyProfileModel;
+
 @{
-    var userPhoto = Model.Profile.Photo;
-    var userName = Model.Profile.UserName;
-    var roleName = Model.Profile.RoleName;
+    var userPhoto = Model?.Photo ?? "/assets2/img/Profile/Instructor/5.png";
+    var userName = Model?.UserName ?? "User";
+    var roleName = Model?.RoleName ?? "Guest";
 }
+
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"

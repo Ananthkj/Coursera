@@ -24,5 +24,7 @@ namespace Coursera.Areas.Instructor.Models
         public string? LinkedIn { get; set; }
 
         public string? Instagram { get; set; }
+
+        public List<Coursera.Models.Course> Courses { get; set; }
     }
 }
