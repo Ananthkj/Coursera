@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coursera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241222162505_InitialMigration")]
+    [Migration("20241226104151_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

@@ -1,4 +1,4 @@
-﻿@model List<Coursera.Models.Course>;
+﻿@model Coursera.Models.MyCoursesViewModel;
 
 <!-- Basic Bootstrap Table -->
 <!-- Content wrapper -->
@@ -7,46 +7,46 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Course Section /</span> All Courses</h4>
-    <div class="card">
-    <div class="table-responsive text-nowrap">
-        <table class="table">
-            <thead class="table-dark" >
-                <tr>
-                    <th style="color:white">Course Name</th>
-                    <th style="color:white">Description</th>
-                    <th style="color:white">Status</th>
-                    <th style="color:white">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-                @foreach (var course in Model)
-                {
-                    <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@course.CourseName</strong></td>
-                        <td>@course.CourseDescription</td>
-                   
-                        <td><span class="badge bg-label-primary me-1">@course.ApprovalStatus</span></td>
-                        <td>
-                              <button class="btn btn-outline-info me-1 view-sections"
-                                type="button"
-                                data-id="@course.Id"
-                                data-bs-toggle="collapse"
-                                    data-bs-target="#multiCollapseExample1"
-                                aria-expanded="false"
-                                    aria-controls="multiCollapseExample1">
-                            View Sections
-                            </button>    
+        <div class="card">
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="color:white">Course Name</th>
+                            <th style="color:white">Description</th>
+                            <th style="color:white">Status</th>
+                            <th style="color:white">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var course in Model.Courses)
+                        {
+                            <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@course.CourseName</strong></td>
+                                <td>@course.CourseDescription</td>
 
-                    
-                             <button class="btn btn-outline-warning edit-course" data-id="@course.Id">Edit</button>
-                        </td>
-                    </tr>
-                }
-                
-            </tbody>
-        </table>
-    </div>
-</div>
+                                <td><span class="badge bg-label-primary me-1">@course.ApprovalStatus</span></td>
+                                <td>
+                                    <button class="btn btn-outline-info me-1 view-sections"
+                                            type="button"
+                                            data-id="@course.Id"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#multiCollapseExample1"
+                                            aria-expanded="false"
+                                            aria-controls="multiCollapseExample1">
+                                        View Sections
+                                    </button>
+
+
+                                    <button class="btn btn-outline-warning edit-course" data-id="@course.Id">Edit</button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="collapse multi-collapse" id="multiCollapseExample1">
             <!-- Placeholder for Sections -->
             <div id="sectionsContainer" style="margin-top: 20px;"></div>

@@ -1,7 +1,11 @@
 ﻿using Coursera.Areas.Instructor.Models;
 using Coursera.Data;
 using Coursera.Models;
+using Coursera.Models.Account;
 using Coursera.Services.Profile;
+using Coursera.Services.SignUp;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +20,12 @@ namespace Coursera.Areas.Instructor.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
-        public ProfileController(ApplicationDbContext context,IProfileService profileService) 
+         private readonly IUsersService _usersService;
+        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService) 
         { 
             _context = context;
             _profileService = profileService;
+            this._usersService = usersService;
         }
 
 
@@ -166,7 +172,19 @@ namespace Coursera.Areas.Instructor.Controllers
             return BadRequest(new { success = false, message = "No file uploaded." });
         }
 
+        [HttpPost]
+         public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index","Home");
+        }
 
+                public IActionResult Login()
+        {
+            return View();
+        }
+
+          
         /*public async Task<IActionResult> UploadPhoto(IFormFile photo)
         {
             if(photo!=null && photo.Length>0)

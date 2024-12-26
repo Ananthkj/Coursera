@@ -33,14 +33,14 @@ namespace Coursera.Areas.Instructor.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-          var courseName= await _context.courses.Select(c=>c.CourseName).ToListAsync();
-           
-                if(courseName.Contains(model.CourseName))
-                {
-                    ModelState.AddModelError("", "This Course Name already Exists");
-                    return View(model);
+            var courseName = await _context.courses.Select(c => c.CourseName).ToListAsync();
 
-                }   
+            if (courseName.Contains(model.CourseName))
+            {
+                ModelState.AddModelError("", "This Course Name already Exists");
+                return View(model);
+
+            }
 
             var InstructorId = GetInstructorId();
             var course = new Course
@@ -55,12 +55,12 @@ namespace Coursera.Areas.Instructor.Controllers
             _context.courses.Add(course);
             await _context.SaveChangesAsync();
             return RedirectToAction("MyCourses");
-            
+
         }
 
         public async Task<IActionResult> AddSection()
         {
-           var courses= await _context.courses.ToListAsync();
+            var courses = await _context.courses.ToListAsync();
             ViewBag.courses = new SelectList(courses, "Id", "CourseName");
             return View();
         }
@@ -114,7 +114,7 @@ namespace Coursera.Areas.Instructor.Controllers
 
         public async Task<IActionResult> GetSectionsByCourse(int CourseId)
         {
-            var sections=await _context.courseSections.Where(s => s.CourseId == CourseId).Select(s => new {s.Id,s.CourseSectionName}).ToListAsync();
+            var sections = await _context.courseSections.Where(s => s.CourseId == CourseId).Select(s => new { s.Id, s.CourseSectionName }).ToListAsync();
             return Json(sections);
         }
 
@@ -124,9 +124,31 @@ namespace Coursera.Areas.Instructor.Controllers
         [HttpGet]
         public async Task<IActionResult> MyCourses()
         {
-            var courses = await _context.courses.Where(c => c.InstructorId == GetInstructorId()).Include(c => c.sections).ThenInclude(c => c.courseLessons).ToListAsync();
-            return View(courses);
+            // Fetch courses for the current instructor
+            var instructorId = GetInstructorId(); // Implement this method to fetch logged-in instructor ID
+            var courses = await _context.courses
+                .Where(c => c.InstructorId == instructorId)
+                .Include(c => c.sections)
+                .ThenInclude(s => s.courseLessons)
+                .ToListAsync();
+
+            var profile = new MyProfileModel
+            {
+                Photo = "/assets2/img/sample-avatar.png", // Replace with actual photo path
+                UserName = "Instructor Name",            // Replace with actual username
+                RoleName = "Instructor"                  // Replace with actual role name
+            };
+
+            var viewModel = new MyCoursesViewModel
+            {
+                Profile = profile,
+                Courses = courses
+            };
+
+            // Pass the list of courses to the view
+            return View(viewModel);
         }
+
 
         public IActionResult MyCourses2()
         {
@@ -280,6 +302,6 @@ namespace Coursera.Areas.Instructor.Controllers
 
 
 
-       
+
     }
 }
