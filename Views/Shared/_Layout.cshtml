@@ -1,5 +1,6 @@
 ﻿@{
-   var UserName= ViewData["UserName"] as string ?? "User";
+    var UserName= ViewData["UserName"] as string ?? "User";
+    var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
 }
 
 <!DOCTYPE html>

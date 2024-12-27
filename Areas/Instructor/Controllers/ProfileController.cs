@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.IO;
 using System.Security.Claims;
 
@@ -22,11 +23,13 @@ namespace Coursera.Areas.Instructor.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
          private readonly IUsersService _usersService;
-        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService): base(profileService)
+        private readonly IMemoryCache _cache;
+        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService,IMemoryCache cache): base(profileService, cache)
         { 
             _context = context;
             _profileService = profileService;
             this._usersService = usersService;
+            _cache = cache;
         }
 
 

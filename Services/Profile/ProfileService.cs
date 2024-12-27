@@ -36,5 +36,27 @@ namespace Coursera.Services.Profile
             return newMyProfile;
         }
 
+
+        public async Task<List<MyProfileModel>> GetInstructorDetails()
+        {
+            var Instructors=await _context.userProfiles
+                .Include(u => u.user)
+                .Select(u=>new MyProfileModel
+                {
+                    UserName = u.user.Name,
+                    RoleName = u.user.Role.RoleName,
+                    Email = u.user.Email,
+                    Photo = u.Photo ?? "/assets2/img/default-avatar.png",
+                    Subject = u.Subject,
+                    UserId = u.user.Id,
+                    Website = u.Website,
+                    Twitter = u.Twitter,
+                    Facebook = u.Facebook,
+                    LinkedIn = u.LinkedIn,
+                    Instagram = u.Instagram
+                }).ToListAsync();
+            return Instructors;
+        }
+
     }
 }

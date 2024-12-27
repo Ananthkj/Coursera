@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout";
+    var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
 }
 
 <!-- Header Start -->
@@ -234,7 +235,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <input type="text" class="form-control bg-light border-0" placeholder="Your Name" asp-for="register.Name" style="padding: 30px 20px;">
-                                  <span asp-validation-for="register.Name" class="text-danger"></span>
+                                <span asp-validation-for="register.Name" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -250,7 +251,7 @@
                                 <select id="course-category" class="custom-select bg-light border-0 px-3" asp-for="register.Course" style="height: 60px;" onchange="loadRelatedCourses()">
                                     <option selected>Select Course</option>
                                     <option value="Web-development">Full Stack Web Developer</option>
-                                        <option value="Data-Science">Data Science</option>
+                                    <option value="Data-Science">Data Science</option>
                                     <option value="Design">Design</option>
                                 </select>
                                 <span asp-validation-for="register.Course" class="text-danger"></span>
@@ -289,20 +290,24 @@
             <h1 class="display-4">Meet Our Instructors</h1>
         </div>
         <div class="owl-carousel team-carousel position-relative" style="padding: 0 30px;">
-            <div class="team-item">
-                <img class="img-fluid w-100" src="img/team-1.jpg" alt="">
-                <div class="bg-light text-center p-4">
-                    <h5 class="mb-3">Instructor Name</h5>
-                    <p class="mb-2">Web Design & Development</p>
-                    <div class="d-flex justify-content-center">
-                        <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                        <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                        <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
+            @foreach (var Instructor in Instructors)
+            {
+                <div class="team-item">
+                    <img class="img-fluid w-100" src="@Instructor.Photo" alt="">
+                    <div class="bg-light text-center p-4">
+                        <h5 class="mb-3">@Instructor.UserName</h5>
+                        <p class="mb-2">@Instructor.Subject</p>
+                        <div class="d-flex justify-content-center">
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>       
+            }
+                  
         </div>
     </div>
 </div>

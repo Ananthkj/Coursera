@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Coursera.Models;
 using Microsoft.Data.SqlClient;
 using Coursera.Services.Profile;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Coursera.Controllers
 {
@@ -12,13 +13,15 @@ namespace Coursera.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly EmailServices _emailService;
         private readonly IProfileService _profileService;
+        private readonly IMemoryCache _cache;
 
-        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration,IProfileService profileService):base(profileService)
+        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration,IProfileService profileService,IMemoryCache cache):base(profileService, cache)
         {
             _logger = logger;
             _emailService = emailService;
             _connectionString = configuration.GetConnectionString("SqlConnection");
             _profileService = profileService;
+            _cache = cache;
         }
 
 

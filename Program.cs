@@ -68,6 +68,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<IUsersService,UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

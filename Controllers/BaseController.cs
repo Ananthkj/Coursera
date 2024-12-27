@@ -1,6 +1,9 @@
-﻿using Coursera.Services.Profile;
+﻿using Coursera.Areas.Instructor.Models;
+using Coursera.Models;
+using Coursera.Services.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 
 namespace Coursera.Controllers
@@ -8,10 +11,13 @@ namespace Coursera.Controllers
     public class BaseController : Controller
     {
         private readonly IProfileService _profileService;
+
+        private readonly IMemoryCache _cache;
        
-        public BaseController(IProfileService profileService) 
+        public BaseController(IProfileService profileService,IMemoryCache cache) 
         { 
             _profileService = profileService;
+            _cache = cache;
         }
 
         //Better approach - Override OnActionExecutionAsync in BaseController
@@ -24,9 +30,21 @@ namespace Coursera.Controllers
         {
             int instructorId = GetInstructorId();
             var userProfile = await _profileService.GetProfile(instructorId);
+            //var Instructors = await _profileService.GetInstructorDetails();
             ViewData["UserPhoto"] = userProfile?.Photo ?? "/default.png";
             ViewData["UserName"] = userProfile?.UserName ?? "User";
             ViewData["RoleName"] = userProfile?.RoleName ?? "Guest";
+
+            var cacheKey = $"InstructorCourses_{instructorId}";
+            if (!_cache.TryGetValue(cacheKey,out List<MyProfileModel> courses))
+            {
+                courses = await _profileService.GetInstructorDetails();
+                var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(30));
+                _cache.Set(cacheKey, courses, cacheOptions);
+            }
+            ViewData["Instructor"] = courses;
+
+
         }
 
 

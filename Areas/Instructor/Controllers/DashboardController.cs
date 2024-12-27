@@ -5,6 +5,7 @@ using Coursera.Services.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 
 namespace Coursera.Areas.Instructor.Controllers
@@ -15,11 +16,13 @@ namespace Coursera.Areas.Instructor.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
+        private readonly IMemoryCache _cache;
 
-        public DashboardController(ApplicationDbContext context,IProfileService profileService): base(profileService)
+        public DashboardController(ApplicationDbContext context,IProfileService profileService,IMemoryCache cache): base(profileService, cache)
         {
             this._context = context;
             this._profileService = profileService;
+            _cache = cache;
         }
 
         public async Task<IActionResult> Index()
