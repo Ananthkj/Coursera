@@ -2,20 +2,23 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Coursera.Models;
 using Microsoft.Data.SqlClient;
+using Coursera.Services.Profile;
 
 namespace Coursera.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly string _connectionString;
         private readonly ILogger<HomeController> _logger;
         private readonly EmailServices _emailService;
+        private readonly IProfileService _profileService;
 
-        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration,IProfileService profileService):base(profileService)
         {
             _logger = logger;
             _emailService = emailService;
             _connectionString = configuration.GetConnectionString("SqlConnection");
+            _profileService = profileService;
         }
 
 

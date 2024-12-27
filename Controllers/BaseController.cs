@@ -13,6 +13,8 @@ namespace Coursera.Controllers
         { 
             _profileService = profileService;
         }
+
+        //Better approach - Override OnActionExecutionAsync in BaseController
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             await SetLayoutDataAsync();

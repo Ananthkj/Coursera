@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+   var UserName= ViewData["UserName"] as string ?? "User";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -84,6 +88,7 @@
                             <a href="feature.html" class="dropdown-item">Our Features</a>
                             <a href="team.html" class="dropdown-item">Instructors</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="testimonial.html" class="dropdown-item">@UserName</a>
                         </div>
                     </div>
                     <a href=@Url.Action("contact","Home") class="nav-item nav-link">Contact</a>

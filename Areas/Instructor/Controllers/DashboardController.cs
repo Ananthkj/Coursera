@@ -1,4 +1,5 @@
 ﻿using Coursera.Areas.Instructor.Models;
+using Coursera.Controllers;
 using Coursera.Data;
 using Coursera.Services.Profile;
 using Microsoft.AspNetCore.Authorization;
@@ -10,18 +11,23 @@ namespace Coursera.Areas.Instructor.Controllers
 {
     [Area("Instructor")]
     [Authorize(Roles ="Instructor")]
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
 
-        public DashboardController(ApplicationDbContext context,IProfileService profileService)
+        public DashboardController(ApplicationDbContext context,IProfileService profileService): base(profileService)
         {
             this._context = context;
             this._profileService = profileService;
         }
 
         public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        /*public async Task<IActionResult> Index()
         {
             var instructorId = GetInstructorId(); // Fetch the instructor ID
             var userProfile = await _profileService.GetProfile(instructorId); // Get profile data
@@ -48,9 +54,9 @@ namespace Coursera.Areas.Instructor.Controllers
             };
 
             return View(model);
-        }
+        }*/
 
-        public int GetInstructorId()
+        /*public int GetInstructorId()
         {
             var InstructorId = User.FindFirst(ClaimTypes.NameIdentifier);
             if (InstructorId != null)
@@ -58,6 +64,6 @@ namespace Coursera.Areas.Instructor.Controllers
                 return int.Parse(InstructorId.Value);
             }
             throw new Exception("User ID not found in claims.");
-        }
+        }*/
     }
 }

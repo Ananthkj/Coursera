@@ -65,12 +65,13 @@
 
 
     // Team carousel
+    var itemCount = $('.team-carousel .team-item').length;
     $(".team-carousel").owlCarousel({
-        autoplay: true,
+        autoplay: false,
         smartSpeed: 1000,
         margin: 30,
         dots: false,
-        loop: true,
+        loop: itemCount>3,
         nav : true,
         navText : [
             '<i class="fa fa-angle-left" aria-hidden="true"></i>',
