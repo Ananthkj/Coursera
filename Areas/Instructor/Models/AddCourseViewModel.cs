@@ -9,5 +9,8 @@ namespace Coursera.Areas.Instructor.Models
 
         [Required]
         public string CourseDescription { get; set; }
+
+        [Required(ErrorMessage ="Please Upload a Image")]
+        public IFormFile formFile { get; set; }
     }
 }
