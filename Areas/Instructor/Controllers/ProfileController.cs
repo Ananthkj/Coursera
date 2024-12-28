@@ -142,8 +142,10 @@ namespace Coursera.Areas.Instructor.Controllers
 
                 var uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                //create a new file if it doesn't exist
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
+                    //asynchronously copy the contents of a file
                     await photo.CopyToAsync(stream);
                 }
 

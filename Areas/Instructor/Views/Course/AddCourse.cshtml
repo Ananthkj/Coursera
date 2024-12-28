@@ -1,19 +1,22 @@
 ﻿@model AddCourseViewModel;
 
 
-@* <h1>Add New Course</h1>
-<form action="AddCourse" method="post">
+@* 
+<h1>Add New Course</h1>
+<form action="AddCourse" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <label asp-for="CourseName">Course Name: </label>
     <input type="text" asp-for="CourseName" /> <br /><br/>
     <label asp-for="CourseDescription">Course Description: </label>
     <input type="text" asp-for="CourseDescription" /><br /><br />
+    <label asp-for="formFileImage">Course Name: </label>
+    <input type="file" asp-for="formFileImage" /> <br /><br />
 
     <button class="btn btn-primary" type="submit">Submit</button>
 </form> *@
 
 <!-- Content wrapper -->
-<div class="content-wrapper">
+ <div class="content-wrapper">
     <!-- Content -->
 
     <div class="container-md container-p-y">
@@ -29,14 +32,48 @@
                        
                     </div>
                     <div class="card-body">
-                        <form action="AddCourse" method="post">
+                        <form action="AddCourse" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" asp-for="CourseName">Course Name</label>
                                 <div class="col-sm-10">
                                     <input type="text" asp-for="CourseName" class="form-control" id="basic-default-name" placeholder="John Doe" />
                                 </div>
-                            </div>               
+                            </div>
+
+                            <div class="card mb-4">                              
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <img src="@Url.Content("/assets2/img/avatars/userProfile3.jpg")"
+                                             alt="user-avatar"
+                                             class="d-block rounded"
+                                             height="100"
+                                             width="100"
+                                             id="uploadedAvatarImage" />
+                                        <div class="button-wrapper">
+                                            <label for="uploadImage" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                <span class="d-none d-sm-block">Upload new photo</span>
+                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                <input type="file"                                                    
+                                                       id="uploadImage"
+                                                       asp-for="formFileImage"
+                                                       class="account-file-input"
+                                                       hidden
+                                                       accept="image/png, image/jpeg"
+                                                       onchange="ChangeImage()" />                                                       
+                                            </label>
+                                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="ResetImage()">
+                                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Reset</span>
+                                            </button>
+
+                                            <p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" asp-for="CourseDescription">Message</label>
                                 <div class="col-sm-10">
@@ -49,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="row justify-content-end">
-                                <div class="col-sm-4" style="padding-left:52px">
+                                <div class="col-sm-5" style="padding-left:52px">
                                     <button type="submit" class="btn btn-primary">Add Course</button>
                                 </div>   
                                 <div class="col-sm-4" >
@@ -65,5 +102,23 @@
             <!-- Basic with Icons -->
         </div>
     </div>
-    </div>
+    </div> 
     <!-- / Content -->
+
+<script>
+    function ChangeImage()
+    {
+       var FileInput= document.getElementById("uploadImage");
+      var srcImageLocation= document.getElementById("uploadedAvatarImage");
+      if(FileInput && FileInput.files[0])
+      {
+          srcImageLocation.src=window.URL.createObjectURL(FileInput.files[0]);
+      }
+    }
+
+      function ResetImage() {
+        var srcImageLocation = document.getElementById("uploadedAvatarImage");
+        srcImageLocation.src = "@Url.Content("/assets2/img/avatars/userProfile3.jpg")"; // Replace with your default image path
+        document.getElementById("uploadImage").value = ""; // Clear the file input
+    }
+</script>

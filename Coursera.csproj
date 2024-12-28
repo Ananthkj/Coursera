@@ -113,6 +113,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Student\Models\" />
+    <Folder Include="wwwroot\assets2\img\courseImage\" />
     <Folder Include="wwwroot\assets2\img\Profile\Admin\" />
     <Folder Include="wwwroot\assets2\img\Profile\Student\" />
   </ItemGroup>

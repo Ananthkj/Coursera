@@ -9,6 +9,8 @@ namespace Coursera.Models
 
         public string CourseName {  get; set; }
 
+        public string CourseImage {  get; set; }
+
         public string CourseDescription { get; set; }
 
         public int InstructorId {  get; set; }
