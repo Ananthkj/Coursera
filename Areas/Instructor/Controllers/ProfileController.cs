@@ -1,4 +1,5 @@
 ﻿using Coursera.Areas.Instructor.Models;
+using Coursera.Controllers;
 using Coursera.Data;
 using Coursera.Models;
 using Coursera.Models.Account;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.IO;
 using System.Security.Claims;
 
@@ -16,21 +18,24 @@ namespace Coursera.Areas.Instructor.Controllers
 {
     [Area("Instructor")]
     [Authorize(Roles = "Instructor")]
-    public class ProfileController : Controller
+    public class ProfileController : InstructorBaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
          private readonly IUsersService _usersService;
-        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService) 
+        private readonly IMemoryCache _cache;
+        public ProfileController(ApplicationDbContext context,IProfileService profileService,IUsersService usersService,IMemoryCache cache): base(profileService, cache)
         { 
             _context = context;
             _profileService = profileService;
             this._usersService = usersService;
+            _cache = cache;
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //await SetLayoutDataAsync();
             return View();
         }
 

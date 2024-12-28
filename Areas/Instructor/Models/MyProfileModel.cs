@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Coursera.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Coursera.Areas.Instructor.Models
 {
@@ -26,5 +27,6 @@ namespace Coursera.Areas.Instructor.Models
         public string? Instagram { get; set; }
 
         public List<Coursera.Models.Course> Courses { get; set; }
+        
     }
 }

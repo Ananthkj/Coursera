@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@* @{
+    var UserName= ViewData["UserName"] as string ?? "User";
+    var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
+}
+ *@
+@{
+
+    var userPhoto = ViewData["UserPhoto"] as string ?? "/assets2/img/avatars/userProfile2.jpg";
+    var userName = ViewData["UserName"] as string ?? "User";
+    var roleName = ViewData["RoleName"] as string ?? "Guest";
+    var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -84,6 +97,7 @@
                             <a href="feature.html" class="dropdown-item">Our Features</a>
                             <a href="team.html" class="dropdown-item">Instructors</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="testimonial.html" class="dropdown-item">@userName</a>
                         </div>
                     </div>
                     <a href=@Url.Action("contact","Home") class="nav-item nav-link">Contact</a>

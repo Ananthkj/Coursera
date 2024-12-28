@@ -2,29 +2,42 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Coursera.Models;
 using Microsoft.Data.SqlClient;
+using Coursera.Services.Profile;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Coursera.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly string _connectionString;
         private readonly ILogger<HomeController> _logger;
         private readonly EmailServices _emailService;
+        private readonly IProfileService _profileService;
+        private readonly IMemoryCache _cache;
 
-        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration,IProfileService profileService,IMemoryCache cache):base(profileService, cache)
         {
             _logger = logger;
             _emailService = emailService;
             _connectionString = configuration.GetConnectionString("SqlConnection");
+            _profileService = profileService;
+            _cache = cache;
         }
 
-
-        public IActionResult index()
+        public async Task<IActionResult> Index()
         {
-            var model = new CombinedFormViewModel();
-            return View(model);
-            //return View();
+           /* var model = new CombinedFormViewModel();
+            return View(model);*/
+            var Instructors=await _profileService.GetInstructorDetails();
+            //await SetLayoutDataAsync();
+            return View(Instructors);
         }
+        /* public IActionResult index()
+         {
+             var model = new CombinedFormViewModel();
+             return View(model);
+             //return View();
+         }*/
 
         public IActionResult contactform()
         {

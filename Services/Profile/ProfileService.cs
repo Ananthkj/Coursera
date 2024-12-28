@@ -14,6 +14,7 @@ namespace Coursera.Services.Profile
 
         public async Task<MyProfileModel> GetProfile(int InstructorUserId)
         {
+
             var newMyProfile = await _context.userProfiles
                 .Include(u => u.user) // Include the related user
                 .Where(u => u.user.Id == InstructorUserId) // Filter by InstructorId
@@ -33,6 +34,28 @@ namespace Coursera.Services.Profile
                 }).FirstOrDefaultAsync();
 
             return newMyProfile;
+        }
+
+
+        public async Task<List<MyProfileModel>> GetInstructorDetails()
+        {
+            var Instructors=await _context.userProfiles
+                .Include(u => u.user)
+                .Select(u=>new MyProfileModel
+                {
+                    UserName = u.user.Name,
+                    RoleName = u.user.Role.RoleName,
+                    Email = u.user.Email,
+                    Photo = u.Photo ?? "/assets2/img/avatars/userProfile2.jpg",
+                    Subject = u.Subject,
+                    UserId = u.user.Id,
+                    Website = u.Website,
+                    Twitter = u.Twitter,
+                    Facebook = u.Facebook,
+                    LinkedIn = u.LinkedIn,
+                    Instagram = u.Instagram
+                }).ToListAsync();
+            return Instructors;
         }
 
     }
