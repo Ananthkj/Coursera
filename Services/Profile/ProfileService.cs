@@ -46,7 +46,7 @@ namespace Coursera.Services.Profile
                     UserName = u.user.Name,
                     RoleName = u.user.Role.RoleName,
                     Email = u.user.Email,
-                    Photo = u.Photo ?? "/assets2/img/default-avatar.png",
+                    Photo = u.Photo ?? "/assets2/img/avatars/userProfile2.jpg",
                     Subject = u.Subject,
                     UserId = u.user.Id,
                     Website = u.Website,

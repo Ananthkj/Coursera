@@ -24,13 +24,20 @@ namespace Coursera.Controllers
             _cache = cache;
         }
 
-
-        public IActionResult index()
+        public async Task<IActionResult> Index()
         {
-            var model = new CombinedFormViewModel();
-            return View(model);
-            //return View();
+           /* var model = new CombinedFormViewModel();
+            return View(model);*/
+            var Instructors=await _profileService.GetInstructorDetails();
+            //await SetLayoutDataAsync();
+            return View(Instructors);
         }
+        /* public IActionResult index()
+         {
+             var model = new CombinedFormViewModel();
+             return View(model);
+             //return View();
+         }*/
 
         public IActionResult contactform()
         {

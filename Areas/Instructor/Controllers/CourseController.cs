@@ -14,7 +14,7 @@ namespace Coursera.Areas.Instructor.Controllers
 {
     [Area("Instructor")]
     [Authorize(Roles = "Instructor")]
-    public class CourseController : BaseController
+    public class CourseController : InstructorBaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IProfileService _profileService;
@@ -30,35 +30,7 @@ namespace Coursera.Areas.Instructor.Controllers
             //await SetLayoutDataAsync();
             return View();
         }
-        /* public async Task<IActionResult> Index()
-         {
-             var instructorId = GetInstructorId(); // Fetch the instructor ID
-             var userProfile = await _profileService.GetProfile(instructorId); // Get profile data
-             var courses = await _context.courses
-                 .Where(c => c.InstructorId == instructorId)
-                 .Include(c => c.sections)
-                 .ThenInclude(s => s.courseLessons)
-                 .ToListAsync(); // Fetch associated courses
-
-             var model = new MyProfileModel
-             {
-                 UserName = userProfile.UserName,
-                 RoleName = userProfile.RoleName,
-                 Email = userProfile.Email,
-                 Photo = userProfile.Photo,
-                 Subject = userProfile.Subject,
-                 UserId = userProfile.UserId,
-                 Website = userProfile.Website,
-                 Twitter = userProfile.Twitter,
-                 Facebook = userProfile.Facebook,
-                 LinkedIn = userProfile.LinkedIn,
-                 Instagram = userProfile.Instagram,
-                 Courses = courses // Include courses
-             };
-
-             return View(model);
-         }*/
-
+       
         //Add Courses Single-Step Process
         public IActionResult AddCourse()
         {

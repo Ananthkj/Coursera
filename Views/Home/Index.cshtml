@@ -1,7 +1,15 @@
-﻿@model CombinedFormViewModel
+﻿@model List<Coursera.Areas.Instructor.Models.MyProfileModel>
 
 @{
     Layout = "_Layout";
+   // var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
+
+}
+@{
+
+    var userPhoto = ViewData["UserPhoto"] as string ?? "/assets2/img/avatars/userProfile2.jpg";
+    var userName = ViewData["UserName"] as string ?? "User";
+    var roleName = ViewData["RoleName"] as string ?? "Guest";
     var Instructors = ViewData["Instructor"] as List<MyProfileModel> ?? new List<MyProfileModel>();
 }
 
@@ -37,7 +45,7 @@
         <div class="row">
             <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
                 <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100" src="img/about.jpg" style="object-fit: cover;" alt="About Us Image">
+                    <img class="position-absolute w-100 h-100" src="~/img/about.jpg" style="object-fit: cover;" alt="About Us Image">
                 </div>
             </div>
             <div class="col-lg-7">
@@ -226,7 +234,7 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center bg-image mx-0 mb-5">
+  @*   <div class="row justify-content-center bg-image mx-0 mb-5">
         <div class="col-lg-6 py-5">
             <div class="bg-white p-5 my-5">
                 <h1 class="text-center mb-4">30% Off For New Students</h1>
@@ -234,7 +242,7 @@
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control bg-light border-0" placeholder="Your Name" asp-for="register.Name" style="padding: 30px 20px;">
+                                <input type="text" class="form-control bg-light border-0" placeholder="Your Name" asp-for="" style="padding: 30px 20px;">
                                 <span asp-validation-for="register.Name" class="text-danger"></span>
                             </div>
                         </div>
@@ -279,7 +287,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
 </div>
 <!-- Courses End -->
 <!-- Team Start -->
@@ -293,7 +301,7 @@
             @foreach (var Instructor in Instructors)
             {
                 <div class="team-item">
-                    <img class="img-fluid w-100" src="@Instructor.Photo" alt="">
+                    <img  style="object-fit: cover" src="@Instructor.Photo" alt="" width="300" height="300">
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">@Instructor.UserName</h5>
                         <p class="mb-2">@Instructor.Subject</p>
@@ -388,7 +396,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7">
+           @*  <div class="col-lg-7">
                 <div class="section-title position-relative mb-4">
                     <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Need Help?</h6>
                     <h1 class="display-4">Send Us A Message</h1>
@@ -427,7 +435,7 @@
                         <button id="send-again" class="btn btn-secondary py-2 px-4" style="margin-top: 10px;">Send Message</button>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 </div>

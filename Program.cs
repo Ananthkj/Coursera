@@ -1,5 +1,6 @@
 using Coursera.Data;
 using Coursera.Models;
+using Coursera.Services.Base;
 using Coursera.Services.Email;
 using Coursera.Services.Folder;
 using Coursera.Services.Profile;
@@ -69,6 +70,7 @@ builder.Services.AddScoped<SeedService>();
 builder.Services.AddScoped<IUsersService,UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddMemoryCache();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 var app = builder.Build();
 

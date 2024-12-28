@@ -1,29 +1,33 @@
 ﻿using Coursera.Areas.Instructor.Models;
-using Coursera.Models;
 using Coursera.Services.Base;
 using Coursera.Services.Profile;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics;
 using System.Security.Claims;
 
-namespace Coursera.Controllers
+
+namespace Coursera.Areas.Instructor.Controllers
 {
-    public class BaseController : Controller,IBaseController
+    [Area("Instructor")]
+    [Authorize(Roles = "Instructor")]
+    public class InstructorBaseController : Controller, IBaseController
     {
         private readonly IProfileService _profileService;
 
         private readonly IMemoryCache _cache;
-       
-        public BaseController(IProfileService profileService,IMemoryCache cache) 
-        { 
+
+        public InstructorBaseController(IProfileService profileService, IMemoryCache cache) 
+        {
             _profileService = profileService;
             _cache = cache;
         }
-
         //Better approach - Override OnActionExecutionAsync in BaseController
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            Debug.WriteLine($"Executing {context.ActionDescriptor.DisplayName}");
             await SetLayoutDataAsync();
             await next(); // Execute the action
         }
@@ -37,7 +41,7 @@ namespace Coursera.Controllers
             ViewData["RoleName"] = userProfile?.RoleName ?? "Guest";
 
             var cacheKey = $"InstructorCourses_{instructorId}";
-            if (!_cache.TryGetValue(cacheKey,out List<MyProfileModel> courses))
+            if (!_cache.TryGetValue(cacheKey, out List<MyProfileModel> courses))
             {
                 courses = await _profileService.GetInstructorDetails();
                 var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(30));
@@ -56,15 +60,5 @@ namespace Coursera.Controllers
                 ? userId
                 : 0;
         }
-
-        /*  protected int GetInstructorId()
-          {
-              var InstructorId = User.FindFirst(ClaimTypes.NameIdentifier);
-              if (InstructorId == null || string.IsNullOrEmpty(InstructorId.Value) || (! int.TryParse(InstructorId.Value,out int UserId)))
-              {
-                  return 0;
-              }
-              return UserId;
-          }*/
     }
 }
