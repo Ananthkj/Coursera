@@ -31,12 +31,19 @@ namespace Coursera.Areas.Instructor.Controllers
             //await SetLayoutDataAsync();
             return View();
         }
-       
+        public async Task<IActionResult> success()
+        {
+            //await SetLayoutDataAsync();
+            return View();
+        }
+
+
         //Add Courses Single-Step Process
         public IActionResult AddCourse()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> AddCourse(AddCourseViewModel model)
         {
@@ -53,26 +60,26 @@ namespace Coursera.Areas.Instructor.Controllers
 
             string imageUrl = null;
 
-            if (model.formFile != null)
+            if (model.formFileImage != null)
             {
-                string fileName=model.formFile.FileName;
-                var extensions = new List<string>() {".jpg", ".jpeg",".png" };
-               var fileExtension= Path.GetExtension(fileName);
+                string fileName = model.formFileImage.FileName;
+                var extensions = new List<string>() { ".jpg", ".jpeg", ".png" };
+                var fileExtension = Path.GetExtension(fileName);
                 if (extensions.Contains(fileExtension.ToLower()))
                 {
                     var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets2/img/courseImage");
                     if (!Directory.Exists(uploadFolder))
                     {
-                        Directory.CreateDirectory(uploadFolder);    
+                        Directory.CreateDirectory(uploadFolder);
                     }
-                    var courseImage=Guid.NewGuid().ToString() + "_" + fileName;
-                    var UploadFilePath=Path.Combine(uploadFolder, courseImage);
+                    var courseImage = Guid.NewGuid().ToString() + "_" + fileName;
+                    var UploadFilePath = Path.Combine(uploadFolder, courseImage);
 
                     try
                     {
                         using (var filestream = new FileStream(UploadFilePath, FileMode.Create))
                         {
-                            await model.formFile.CopyToAsync(filestream);
+                            await model.formFileImage.CopyToAsync(filestream);
                         }
                         imageUrl = Url.Content("~/assets2/img/courseImage/" + courseImage);
                     }
@@ -81,11 +88,11 @@ namespace Coursera.Areas.Instructor.Controllers
                         ModelState.AddModelError("", "File upload failed. Please try again.");
                         return View(model);
                     }
-                    
+
                 }
                 else
                 {
-                    ModelState.AddModelError("","Invalid Image Format");
+                    ModelState.AddModelError("", "Invalid Image Format");
                     return View(model);
                 }
             }
@@ -97,7 +104,7 @@ namespace Coursera.Areas.Instructor.Controllers
                 CourseName = model.CourseName,
                 CourseDescription = model.CourseDescription,
                 InstructorId = InstructorId,
-                //CourseImage= imageUrl,
+                CourseImage= imageUrl ?? "/assets2/img/avatars/userProfile3.jpg",
                 CreatedDate = DateTime.Now,
                 ApprovalStatus = ApprovalStatus.Pending,
                 IsPublished = false
@@ -256,6 +263,7 @@ namespace Coursera.Areas.Instructor.Controllers
 
             // Update course details
             course.CourseName = model.CourseName;
+            //course.CourseImage=model.CourseImagePath;
             course.CourseDescription = model.CourseDescription;
 
             await _context.SaveChangesAsync();
