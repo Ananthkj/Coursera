@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Coursera.Areas.Instructor.Controllers
@@ -45,10 +46,50 @@ namespace Coursera.Areas.Instructor.Controllers
 
             if (courseName.Contains(model.CourseName))
             {
-                ModelState.AddModelError("", "This Course Name already Exists");
+                ModelState.AddModelError("CourseName", "This Course Name already Exists");
                 return View(model);
 
             }
+
+            string imageUrl = null;
+
+            if (model.formFile != null)
+            {
+                string fileName=model.formFile.FileName;
+                var extensions = new List<string>() {".jpg", ".jpeg",".png" };
+               var fileExtension= Path.GetExtension(fileName);
+                if (extensions.Contains(fileExtension.ToLower()))
+                {
+                    var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets2/img/courseImage");
+                    if (!Directory.Exists(uploadFolder))
+                    {
+                        Directory.CreateDirectory(uploadFolder);    
+                    }
+                    var courseImage=Guid.NewGuid().ToString() + "_" + fileName;
+                    var UploadFilePath=Path.Combine(uploadFolder, courseImage);
+
+                    try
+                    {
+                        using (var filestream = new FileStream(UploadFilePath, FileMode.Create))
+                        {
+                            await model.formFile.CopyToAsync(filestream);
+                        }
+                        imageUrl = Url.Content("~/assets2/img/courseImage/" + courseImage);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", "File upload failed. Please try again.");
+                        return View(model);
+                    }
+                    
+                }
+                else
+                {
+                    ModelState.AddModelError("","Invalid Image Format");
+                    return View(model);
+                }
+            }
+
 
             var InstructorId = GetInstructorId();
             var course = new Course
@@ -56,12 +97,23 @@ namespace Coursera.Areas.Instructor.Controllers
                 CourseName = model.CourseName,
                 CourseDescription = model.CourseDescription,
                 InstructorId = InstructorId,
+                //CourseImage= imageUrl,
                 CreatedDate = DateTime.Now,
                 ApprovalStatus = ApprovalStatus.Pending,
                 IsPublished = false
             };
-            _context.courses.Add(course);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                _context.courses.Add(course);
+                await _context.SaveChangesAsync();
+                
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while saving the course. Please try again.");
+                return View(model);
+            }
             return RedirectToAction("MyCourses");
 
         }

@@ -41,6 +41,7 @@
                             <div class="card mb-4">                              
                                 <div class="card-body">
                                     <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <img src="@Url.Content("/assets2/img/avatars/userProfile3.jpg")"
                                              alt="user-avatar"
                                              class="d-block rounded"
@@ -53,6 +54,7 @@
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
                                                 <input type="file"                                                    
                                                        id="uploadImage"
+                                                       asp-for="formFile"
                                                        class="account-file-input"
                                                        hidden
                                                        accept="image/png, image/jpeg"
