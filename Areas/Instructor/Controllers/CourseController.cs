@@ -344,9 +344,18 @@ namespace Coursera.Areas.Instructor.Controllers
 
 
 
-        public IActionResult DeleteAllCourses(int CourseId)
+        public async Task<IActionResult> DeleteAllCourses(int CourseId)
         {
-            return View();
+            var deleteCourse = await _context.courses.FirstOrDefaultAsync(c => c.Id == CourseId);
+            if (deleteCourse == null)
+            {
+                TempData["ErrorMessage"] = "Course not found.";
+                return RedirectToAction("MyCourses2");
+            }
+
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Course updated successfully.";
+            return RedirectToAction("MyCourses2");
         }
 
 

@@ -22,15 +22,24 @@
                 <tbody class="table-border-bottom-0">
                     @if (TempData["ErroMessage"]!=null)
                     {
-                        <p>@TempData["ErroMessage"]</p>
+                        <div>
+                            <p style="color:red">@TempData["ErroMessage"]</p>
+                        </div>
+                        
                     }
                     @if (TempData["SuccessMessage"]!=null)
                     {
-                        <p>@TempData["SuccessMessage"]</p>
+                        <div>
+                            <p style="color:green">@TempData["SuccessMessage"]</p>
+                        </div>
+                        
                     }
                     @if (ViewBag.ErrorMessage!=null)
                     {
-                        <p>ViewBag.ErrorMessage</p>
+                        <div>
+                            <p style="color:red">ViewBag.ErrorMessage</p>
+                        </div>
+                       
                     }
                     @foreach(var course in Model.AllCourses)
                     {
