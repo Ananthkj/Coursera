@@ -216,9 +216,137 @@ namespace Coursera.Areas.Instructor.Controllers
         }
 
 
-        public IActionResult MyCourses2()
+        //All Courses Section
+        public async Task<IActionResult> MyCourses2(string errorMessage)
         {
-            return View();
+          var allCourses = await _context.courses
+                .Select(c => new CourseViewModel{
+                    CourseId = c.Id,
+                    CourseName = c.CourseName,
+                    CourseImage = c.CourseImage,
+                    ApprovalStatus=c.ApprovalStatus,
+                    IsPublished=c.IsPublished,
+                }).ToListAsync();
+
+            var courses = new MyProfileModel
+            {
+                AllCourses = allCourses
+            };
+            ViewBag.ErrorMessage = errorMessage;    
+
+            return View(courses);
+        }
+
+        public async Task<IActionResult> EditAllCourses(int CourseId)
+        {
+          var userCourse=  await _context.courses
+                .Select(c=>new CourseViewModel
+                {
+                    CourseId = c.Id,
+                    CourseName = c.CourseName,
+                    CourseImage = c.CourseImage,
+                    ApprovalStatus=c.ApprovalStatus,
+                    IsPublished=c.IsPublished
+                }).FirstOrDefaultAsync(c=>c.CourseId==CourseId);    
+ 
+            if (userCourse == null)
+            {
+                return RedirectToAction("MyCourses2",new { errorMessage= "No Couse Found" });
+            }
+            var newCourse = new MyProfileModel
+            {
+                courseView = userCourse
+            };
+
+            return View(newCourse);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAllCourses(MyProfileModel model)
+        {
+            var course = await _context.courses.FirstOrDefaultAsync(c => c.Id == model.courseView.CourseId);
+            if (course == null)
+            {
+                TempData["ErrorMessage"] = "Course not found.";
+                return RedirectToAction("MyCourses2");
+            }
+
+            // Update course details
+            course.CourseName = model.courseView.CourseName;
+            course.ApprovalStatus = model.courseView.ApprovalStatus;
+            course.IsPublished = model.courseView.IsPublished;
+
+            // Handle image upload if a new file is provided
+            if (model.courseView.CourseImageFile != null && model.courseView.CourseImageFile.Length > 0)
+            {
+                var imageFileName = model.courseView.CourseImageFile.FileName;
+                var imageExtension = Path.GetExtension(imageFileName).ToLower();
+
+                // Valid image extensions
+                var validExtensions = new List<string> { ".jpg", ".jpeg", ".png" };
+                if (!validExtensions.Contains(imageExtension))
+                {
+                    ModelState.AddModelError("", "Invalid file format. Only JPG, JPEG, and PNG are allowed.");
+                    return View(model);
+                }
+
+                // Ensure upload folder exists
+                var uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets2/img/courseImage");
+                if (!Directory.Exists(uploadFolder))
+                {
+                    Directory.CreateDirectory(uploadFolder);
+                }
+
+                // Generate a unique file name and save the file
+                var fileName = Guid.NewGuid().ToString() + imageExtension;
+                var uploadFilePath = Path.Combine(uploadFolder, fileName);
+
+                try
+                {
+                    using (var fileStream = new FileStream(uploadFilePath, FileMode.Create))
+                    {
+                        await model.courseView.CourseImageFile.CopyToAsync(fileStream);
+                    }
+                    course.CourseImage = "/assets2/img/courseImage/" + fileName;
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Error uploading file: {ex.Message}");
+                    return View(model);
+                }
+            }
+
+            // Save changes to the database
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["SuccessfullUpdate"] = "Course updated successfully.";
+                return RedirectToAction("MyCourses2");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Error saving changes: {ex.Message}");
+                return View(model);
+            }
+        }
+
+
+
+
+
+        public async Task<IActionResult> DeleteAllCourses(int CourseId)
+        {
+            var deleteCourse = await _context.courses.FirstOrDefaultAsync(c => c.Id == CourseId);
+            if (deleteCourse == null)
+            {
+                TempData["ErrorMessage"] = "Course not found.";
+                return RedirectToAction("MyCourses2");
+            }
+
+            _context.courses.Remove(deleteCourse);
+            await _context.SaveChangesAsync();
+            TempData["SuccessfullDeletion"] = "Course updated successfully.";
+            return RedirectToAction("MyCourses2");
         }
 
         public int GetInstructorId()
