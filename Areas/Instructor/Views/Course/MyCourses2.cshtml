@@ -22,16 +22,32 @@
                 <tbody class="table-border-bottom-0">
                     @if (TempData["ErroMessage"]!=null)
                     {
-                        <div>
-                            <p style="color:red">@TempData["ErroMessage"]</p>
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            Course not found ?— check it out!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         
                     }
-                    @if (TempData["SuccessMessage"]!=null)
+                    @if (TempData["SuccessfullUpdate"] != null)
                     {
-                        <div>
-                            <p style="color:green">@TempData["SuccessMessage"]</p>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            Successfully Updated!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        @* <div>
+                            <p style="color:green">@TempData["SuccessMessage"]</p>
+                        </div> *@
+
+                    }
+                    @if (TempData["SuccessfullDeletion"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            Successfully Deleted!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @* <div>
+                            <p style="color:green">@TempData["SuccessMessage"]</p>
+                        </div> *@
                         
                     }
                     @if (ViewBag.ErrorMessage!=null)

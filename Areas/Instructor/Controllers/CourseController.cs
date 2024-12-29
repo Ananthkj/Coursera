@@ -248,11 +248,7 @@ namespace Coursera.Areas.Instructor.Controllers
                     ApprovalStatus=c.ApprovalStatus,
                     IsPublished=c.IsPublished
                 }).FirstOrDefaultAsync(c=>c.CourseId==CourseId);    
-            
-           /* if (userCourse==null)
-            {
-                return BadRequest("No Course Find");
-            }*/
+ 
             if (userCourse == null)
             {
                 return RedirectToAction("MyCourses2",new { errorMessage= "No Couse Found" });
@@ -279,12 +275,6 @@ namespace Coursera.Areas.Instructor.Controllers
             course.CourseName = model.courseView.CourseName;
             course.ApprovalStatus = model.courseView.ApprovalStatus;
             course.IsPublished = model.courseView.IsPublished;
-
-            if (model.courseView.CourseImageFile == null)
-            {
-                ModelState.AddModelError("", "File upload failed. No file was provided.");
-                return View(model);
-            }
 
             // Handle image upload if a new file is provided
             if (model.courseView.CourseImageFile != null && model.courseView.CourseImageFile.Length > 0)
@@ -330,7 +320,7 @@ namespace Coursera.Areas.Instructor.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Course updated successfully.";
+                TempData["SuccessfullUpdate"] = "Course updated successfully.";
                 return RedirectToAction("MyCourses2");
             }
             catch (Exception ex)
@@ -353,13 +343,11 @@ namespace Coursera.Areas.Instructor.Controllers
                 return RedirectToAction("MyCourses2");
             }
 
+            _context.courses.Remove(deleteCourse);
             await _context.SaveChangesAsync();
-            TempData["SuccessMessage"] = "Course updated successfully.";
+            TempData["SuccessfullDeletion"] = "Course updated successfully.";
             return RedirectToAction("MyCourses2");
         }
-
-
-
 
         public int GetInstructorId()
         {

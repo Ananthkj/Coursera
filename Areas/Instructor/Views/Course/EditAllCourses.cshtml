@@ -1,55 +1,102 @@
 ﻿@model MyProfileModel
 
-<h1>Edit Course</h1>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
 
-<form asp-action="EditAllCourses" asp-controller="Course" method="post" enctype="multipart/form-data">
-    <!-- Display validation summary -->
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container-md container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Course Section/</span> All Courses</h4>
 
-    <!-- Hidden input for CourseId (essential for identifying the course) -->
-    <input type="hidden" asp-for="courseView.CourseId" />
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row" style="display:flex; align-items:center;justify-content:center">
+            <!-- Basic Layout -->
+            <div class="col-6">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Edit Course</h5>
 
-    <!-- Course Name -->
-    <div class="form-group">
-        <label asp-for="courseView.CourseName" class="form-label">Course Name:</label>
-        <input type="text" asp-for="courseView.CourseName" class="form-control" placeholder="Enter course name" />
-        <span asp-validation-for="courseView.CourseName" class="text-danger"></span>
-    </div>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="EditAllCourses" asp-controller="Course" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <!-- Hidden input for CourseId (essential for identifying the course) -->
+                            <input type="hidden" asp-for="courseView.CourseId" />
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" asp-for="courseView.CourseName">Course Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" asp-for="courseView.CourseName" class="form-control" id="basic-default-name" placeholder="John Doe" />
+                                </div>
+                            </div>
 
-    <!-- Course Image -->
-    <div class="form-group">
-        <label class="form-label">Current Course Image:</label>
-        <div>
-            <img src="@Model.courseView.CourseImage" alt="Course Image" width="100" height="100" class="img-thumbnail" />
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start align-items-sm-center gap-4">                                     
+                                        <img src="@Url.Content(Model.courseView.CourseImage)"
+                                             alt="user-avatar"
+                                             class="d-block rounded"
+                                             height="100"
+                                             width="100"
+                                             id="uploadedAvatarImage" />
+                                        <div class="button-wrapper">
+                                            <label for="uploadImage" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                <span class="d-none d-sm-block">Upload new photo</span>
+                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                <input type="file"
+                                                       id="uploadImage"
+                                                       asp-for="courseView.CourseImageFile"
+                                                       class="account-file-input"
+                                                       hidden
+                                                       accept="image/png, image/jpeg"
+                                                       onchange="ChangeImage()" />
+                                            </label>
+                                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="ResetImage()">
+                                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Reset</span>
+                                            </button>
+
+                                            <p class="text-muted mb-0">Allowed JPG or PNG. Max size of 800K</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-sm-5" style="padding-left:52px">
+                                    <button type="submit" class="btn btn-primary">Save Course</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="@Url.Action("MyCourses2", "Course", new { area = "Instructor" })" class="btn btn-secondary">Cancel</a>
+                                </div>
+
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic with Icons -->
         </div>
-        <label asp-for="courseView.CourseImageFile" class="form-label">Upload New Image:</label>
-        <input type="file" asp-for="courseView.CourseImageFile" class="form-control" />
-        <span asp-validation-for="courseView.CourseImageFile" class="text-danger"></span>
     </div>
+</div>
+<!-- / Content -->
 
-    <!-- Approval Status -->
-    <div class="form-group">
-        <label asp-for="courseView.ApprovalStatus" class="form-label">Approval Status:</label>
-        <select asp-for="courseView.ApprovalStatus" class="form-control">
-            <option value="@Coursera.Models.ApprovalStatus.Pending">Pending</option>
-            <option value="@Coursera.Models.ApprovalStatus.Approved">Approved</option>
-            <option value="@Coursera.Models.ApprovalStatus.Rejected">Rejected</option>
-        </select>
-        <span asp-validation-for="courseView.ApprovalStatus" class="text-danger"></span>
-    </div>
+<script>
+    function ChangeImage()
+    {
+       var FileInput= document.getElementById("uploadImage");
+      var srcImageLocation= document.getElementById("uploadedAvatarImage");
+      if(FileInput && FileInput.files[0])
+      {
+          srcImageLocation.src=window.URL.createObjectURL(FileInput.files[0]);
+      }
+    }
 
-    <!-- Is Published -->
-    <div class="form-group">
-        <label asp-for="courseView.IsPublished" class="form-label">Is Published:</label>
-        <select asp-for="courseView.IsPublished" class="form-control">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-        </select>
-        <span asp-validation-for="courseView.IsPublished" class="text-danger"></span>
-    </div>
+      function ResetImage() {
+        var srcImageLocation = document.getElementById("uploadedAvatarImage");
+        srcImageLocation.src = "@Url.Content("/assets2/img/avatars/userProfile3.jpg")"; // Replace with your default image path
+        document.getElementById("uploadImage").value = ""; // Clear the file input
+    }
+</script>
 
-    <!-- Submit Button -->
-    <div class="form-group mt-3">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
+
