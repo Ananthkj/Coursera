@@ -1,0 +1,55 @@
+﻿@model MyProfileModel
+
+<h1>Edit Course</h1>
+
+<form asp-action="EditAllCourses" asp-controller="Course" method="post" enctype="multipart/form-data">
+    <!-- Display validation summary -->
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- Hidden input for CourseId (essential for identifying the course) -->
+    <input type="hidden" asp-for="courseView.CourseId" />
+
+    <!-- Course Name -->
+    <div class="form-group">
+        <label asp-for="courseView.CourseName" class="form-label">Course Name:</label>
+        <input type="text" asp-for="courseView.CourseName" class="form-control" placeholder="Enter course name" />
+        <span asp-validation-for="courseView.CourseName" class="text-danger"></span>
+    </div>
+
+    <!-- Course Image -->
+    <div class="form-group">
+        <label class="form-label">Current Course Image:</label>
+        <div>
+            <img src="@Model.courseView.CourseImage" alt="Course Image" width="100" height="100" class="img-thumbnail" />
+        </div>
+        <label asp-for="courseView.CourseImageFile" class="form-label">Upload New Image:</label>
+        <input type="file" asp-for="courseView.CourseImageFile" class="form-control" />
+        <span asp-validation-for="courseView.CourseImageFile" class="text-danger"></span>
+    </div>
+
+    <!-- Approval Status -->
+    <div class="form-group">
+        <label asp-for="courseView.ApprovalStatus" class="form-label">Approval Status:</label>
+        <select asp-for="courseView.ApprovalStatus" class="form-control">
+            <option value="@Coursera.Models.ApprovalStatus.Pending">Pending</option>
+            <option value="@Coursera.Models.ApprovalStatus.Approved">Approved</option>
+            <option value="@Coursera.Models.ApprovalStatus.Rejected">Rejected</option>
+        </select>
+        <span asp-validation-for="courseView.ApprovalStatus" class="text-danger"></span>
+    </div>
+
+    <!-- Is Published -->
+    <div class="form-group">
+        <label asp-for="courseView.IsPublished" class="form-label">Is Published:</label>
+        <select asp-for="courseView.IsPublished" class="form-control">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+        <span asp-validation-for="courseView.IsPublished" class="text-danger"></span>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

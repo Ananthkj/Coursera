@@ -30,5 +30,7 @@ namespace Coursera.Areas.Instructor.Models
 
         public List<Coursera.Areas.Instructor.Models.CourseViewModel> AllCourses { get; set; }
 
+        public CourseViewModel courseView { get; set; }
+
     }
 }
