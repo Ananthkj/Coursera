@@ -216,10 +216,28 @@ namespace Coursera.Areas.Instructor.Controllers
         }
 
 
-        public IActionResult MyCourses2()
+        //All Courses Section
+        public async Task<IActionResult> MyCourses2()
         {
-            return View();
+          var allCourses = await _context.courses
+                .Select(c => new CourseViewModel{
+                    CourseName = c.CourseName,
+                    CourseImage = c.CourseImage,
+                    ApprovalStatus=c.ApprovalStatus,
+                    IsPublished=c.IsPublished,
+                }).ToListAsync();
+
+            var courses = new MyProfileModel
+            {
+                AllCourses = allCourses
+            };
+
+            return View(courses);
         }
+
+
+
+
 
         public int GetInstructorId()
         {
