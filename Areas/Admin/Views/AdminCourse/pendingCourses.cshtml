@@ -1,0 +1,137 @@
+﻿@model List<AdminCourseViewModel>
+
+
+@{
+    int count = 0;
+}
+
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Tables</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Tables</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Basic Tables</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Hoverable Table</div>
+                    </div>
+                    @if (TempData["ApprovalError"]!=null)
+                    {
+                        <p style="color:red;display:flex;justify-content:center;align-items:center">@TempData["ApprovalError"]</p>
+                    }
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr style="text-align:center">
+                                    <th scope="col">First</th>
+                                    <th scope="col">CourseName</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var course in Model)
+                                {
+                                    <tr style="text-align:center">
+                                        <td>@(count+=1)</td>
+                                        <td>@course.courseName</td>
+                                        <td>
+                                            <img src="@course.courseImage" class="d-block rounded" alt="Alternate Text" width="50" height="50" />
+                                        </td>
+                                        <td><span class="bg-warning text-dark p-2 rounded">@course.ApprovalStatus</span></td>
+                                        <td style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                            <form asp-action="PendingCourses" asp-controller="AdminCourse" method="post" style="display: flex; flex-direction: row; align-items: center; column-gap:10px">
+                                                <input type="hidden" name="courseId" value="@course.courseId" />
+                                                <select name="ApprovalStatus" asp-items="ViewBag.ApprovalStatus" class="form-select form-control-lg" id="largeSelect" style="min-width: 150px; white-space: nowrap;">
+                                                    <option value="" disabled>Status</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-primary">Proceed</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* <h1>Pending Courses</h1>
+
+@if (TempData["CourseError"] != null)
+{
+    <p style="color:red">@TempData["CourseError"]</p>
+}
+@if (TempData["CourseSuccess"] != null)
+{
+    <p style="color:green">@TempData["CourseSuccess"]</p>
+}
+
+@if (Model != null && Model.Any())
+{
+    @foreach (var course in Model)
+    {
+        <p>CourseName: @course.courseName</p>
+        <p>CourseImagePath: @course.courseImage</p>
+        <p>ApprovalStatus: @course.ApprovalStatus</p>
+        <p>IsPublished: @course.IsPublished</p>
+        <form asp-action="PendingCourses" asp-controller="AdminCourse" method="post">
+            <input type="hidden" name="courseId" value="@course.courseId" />
+            <select name="ApprovalStatus" asp-items="ViewBag.ApprovalStatus">
+                <option value="">--- Select Status ---</option>
+            </select>
+            <button type="submit">Proceed</button>
+        </form>
+    }
+
+    for(int i=0;i<Model.Count;i++)
+    {
+        <p>CourseName: @Model[i].courseName</p>
+        <p>CourseImagePath: @Model[i].courseImage</p>
+        <p>ApprovalStatus: @Model[i].ApprovalStatus</p>
+        <p>IsPublished: @Model[i].IsPublished</p>
+        <form asp-action="PendingCourses" asp-controller="AdminCourse" method="post">
+            <input type="hidden" name="courseId" asp-for="@Model[i].courseId" />
+            <select asp-for="@Model[i].ApprovalStatus" asp-items="ViewBag.ApprovalStatus">
+                <option value="">--- Select Status ---</option>
+            </select>
+            <button type="submit">Proceed</button>
+        </form>
+    }
+
+
+
+}
+else
+{
+    <p>No pending courses available.</p>
+} *@

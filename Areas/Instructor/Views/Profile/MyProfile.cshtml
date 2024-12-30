@@ -1,6 +1,6 @@
 ﻿@model Coursera.Areas.Instructor.Models.MyProfileModel
 
-<div class="row flex justify-content-center align-items-center" style="display:flex;justify-content:center;align-items:center">
+<div class="row flex justify-content-center align-items-center">
     <!-- Display headings -->
     <div class="col-md" style="display:flex;justify-content:start;align-items:start;margin-top:10px">
         <div class="col-md-8" style="display:flex;justify-content:center;align-items:start;margin-top:10px">
@@ -65,7 +65,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div style="padding:5px 0px 5px 20px">
+            <div style="padding:20px">
                     <form>
                         <button type="submit" formaction="@Url.Action("UpdateProfile", "Profile", new { area= "Instructor"})" class="btn btn-primary me-2">Edit</button>
                     </form>

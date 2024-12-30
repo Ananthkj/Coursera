@@ -1,0 +1,102 @@
+﻿@model List<AdminAllCourseViewModel>
+@{
+    int count = 0;
+}
+
+@if(Model!=null && Model.Any())
+{
+    
+
+
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Tables</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Tables</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Basic Tables</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">All Courses</div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr style="text-align:center">
+                                        <th class="bg-black text-light" scope="col">No:</th>
+                                        <th class="bg-black text-light" scope="col">CourseName</th>
+                                        <th class="bg-black text-light" scope="col">Image</th>
+                                        <th class="bg-black text-light" scope="col">Status</th>
+                                        <th class="bg-black text-light" scope="col">IsPublished</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var course in Model)
+                                {
+                                        <tr style="text-align:center">
+                                            <td>@(count += 1)</td>
+                                            <td>@course.CourseName</td>
+                                            <td>
+                                                <div class="avatar avatar-lg">
+                                                    <img src="@course.CourseImage" alt="..." class="avatar-img rounded-circle">
+                                                </div>                                           
+                                            </td>
+                                            @if (course.ApprovalStatus == Coursera.Models.ApprovalStatus.Approved)
+                                            {
+                                                <td><span class="text-success text-dark p-2 rounded">@course.ApprovalStatus</span></td>
+                                            }
+                                            else if (course.ApprovalStatus == Coursera.Models.ApprovalStatus.Rejected)
+                                            {
+                                                <td><span class="text-danger text-dark p-2 rounded">@course.ApprovalStatus</span></td>
+                                            }
+                                            else
+                                            {
+                                                <td><span class="text-warning text-dark p-2 rounded">@course.ApprovalStatus</span></td>
+                                            }
+                                            
+                                            @if (course.IsPublished)
+                                            {
+                                                <td><span class="text-primary p-2 rounded">Published</span></td>
+                                            }
+                                            else
+                                            {
+
+                                                <td><span class="text-danger p-2 rounded">Not Published</span></td>
+                                            }
+
+                                        </tr>
+                                }
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}else{
+    <p style="color:red">No Course Found</p>
+}
+
+
