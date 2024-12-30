@@ -74,10 +74,23 @@ namespace Coursera.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
 
             TempData["CourseSuccess"] = "Successfully Updated!";
-            return await PendingCourses(); // Re-fetch and return the pending courses
+            //return await PendingCourses(); 
+            return RedirectToAction("AllCourses");
         }
 
-        
+        public async Task<IActionResult> AllCourses()
+        {
+            var allCourses = await _context.courses
+                 .Select(c=>new AdminAllCourseViewModel
+                 {
+                     CourseId = c.Id,
+                     CourseName=c.CourseName,
+                     CourseImage=c.CourseImage,
+                     ApprovalStatus=c.ApprovalStatus,
+                     IsPublished=c.IsPublished
+                 }).ToListAsync();
+            return View(allCourses);
+        }
         public IActionResult Success()
         {
             return View();

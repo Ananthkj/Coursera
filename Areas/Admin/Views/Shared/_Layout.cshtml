@@ -72,48 +72,87 @@
             </div>
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
-                    <ul class="nav nav-secondary">                  
-                     
+                    <ul class="nav nav-secondary">
+
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#submenu">
-                                <i class="fa-solid fa-circle-user" style="color:white;"></i>
+                            <a data-bs-toggle="collapse" href="#userManagementSubmenu">
+                                <i class="fa-solid fa-book" style="color:white;"></i>
                                 <p>User Management</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="submenu">
+
+                            <div class="collapse" id="userManagementSubmenu">
+                                <ul class="nav nav-collapse subnav">
+                                    <li>
+                                        <a href="/Admin/UserManagement/index">
+                                            <span class="sub-item">All Users</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Admin/UserManagement/Create">
+                                            <span class="sub-item">Add New</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="sub-item">User Profile</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </li>
+
+                    </ul>
+               
+                    <ul class="nav nav-secondary">
+                        <!-- All Courses Menu -->
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#allCoursesSubmenu">
+                                <i class="fa-solid fa-book" style="color:white;"></i>
+                                <p>All Courses</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="allCoursesSubmenu">
                                 <ul class="nav nav-collapse">
                                     <li>
-                                        
-                                        <a data-bs-toggle="collapse" href="#subnav1">
-                                            
-                                            <span class="sub-item">Account Settings</span>
-                                            <span class="caret"></span>
+                                        <a href="/Admin/Courses/Index">
+                                            <span class="sub-item">View All Courses</span>
                                         </a>
-                                        <div class="collapse" id="subnav1">
-                                            <ul class="nav nav-collapse subnav">
-                                                <li>
-                                                    <a href="/Admin/UserManagement/index">
-                                                        <span class="sub-item">All Users</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="/Admin/UserManagement/Create">
-                                                        <span class="sub-item">Add New</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <span class="sub-item">User Profile</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </li>
-                     
+                                    <li>
+                                        <a href="/Admin/Courses/Create">
+                                            <span class="sub-item">Add New Course</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <!-- Pending Courses Menu -->
+                        <li class="nav-item">
+                            <a data-bs-toggle="collapse" href="#pendingCoursesSubmenu">
+                                <i class="fa-solid fa-clock" style="color:white;"></i>
+                                <p>Pending Courses</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="pendingCoursesSubmenu">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="/Admin/Courses/Pending">
+                                            <span class="sub-item">View Pending Courses</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Admin/Courses/Approve">
+                                            <span class="sub-item">Approve Courses</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>
