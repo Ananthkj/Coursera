@@ -1,0 +1,34 @@
+﻿@model List<AdminCourseViewModel>
+
+<h1>Pending Courses</h1>
+
+@if (TempData["CourseError"] != null)
+{
+    <p style="color:red">@TempData["CourseError"]</p>
+}
+@if (TempData["CourseSuccess"] != null)
+{
+    <p style="color:green">@TempData["CourseSuccess"]</p>
+}
+
+@if (Model != null && Model.Any())
+{
+    @foreach (var course in Model)
+    {
+        <p>CourseName: @course.courseName</p>
+        <p>CourseImagePath: @course.courseImage</p>
+        <p>ApprovalStatus: @course.ApprovalStatus</p>
+        <p>IsPublished: @course.IsPublished</p>
+        <form asp-action="PendingCourses" asp-controller="AdminCourse" method="post">
+            <input type="hidden" name="courseId" value="@course.courseId" />
+            <select name="ApprovalStatus" asp-items="ViewBag.ApprovalStatus">
+                <option value="">--- Select Status ---</option>
+            </select>
+            <button type="submit">Proceed</button>
+        </form>
+    }
+}
+else
+{
+    <p>No pending courses available.</p>
+}
