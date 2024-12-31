@@ -5,7 +5,7 @@ Application based on the concept of Online Courses App
 3. Instructor can Create courses and Add the Courses to the UI.
 
    ## Technologies Used
-Backend: ASP.NET Core 8.0 <br>
+Backend: ASP.NET Core 8.0 (c# version 13.0) <br>
 Frontend: Bootstrap  v5.3.2, JavaScript,Html,css,JQuery(Ajax) <br>
 Database: SQL Server 2022 <br>
 Framework: Entity Framework (Linq Query) <br>
