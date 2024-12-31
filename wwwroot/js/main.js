@@ -41,12 +41,16 @@
 
 
     // Courses carousel
+    
+    var courseItem = $('.courses-carousel .courses-item').length;
+    console.log("Number of courses:", courseItem); // Debug count
+
     $(".courses-carousel").owlCarousel({
-        autoplay: true,
+        autoplay: false,
         smartSpeed: 1500,
-        loop: true,
+        loop: false,
         dots: false,
-        nav : false,
+        nav : true,
         responsive: {
             0:{
                 items:1

@@ -4,6 +4,7 @@ using Coursera.Models;
 using Microsoft.Data.SqlClient;
 using Coursera.Services.Profile;
 using Microsoft.Extensions.Caching.Memory;
+using Coursera.Areas.Instructor.Models;
 
 namespace Coursera.Controllers
 {
@@ -14,6 +15,8 @@ namespace Coursera.Controllers
         private readonly EmailServices _emailService;
         private readonly IProfileService _profileService;
         private readonly IMemoryCache _cache;
+        private const string PUBLIC_COURSE_CACHE_KEY = "PublicCourseDetails";
+        private const string PUBLIC_INSTRUCTOR_CACHE_KEY = "PublicInstructorDetails";
 
         public HomeController(ILogger<HomeController> logger,EmailServices emailService, IConfiguration configuration,IProfileService profileService,IMemoryCache cache):base(profileService, cache)
         {
@@ -26,11 +29,18 @@ namespace Coursera.Controllers
 
         public async Task<IActionResult> Index()
         {
-           /* var model = new CombinedFormViewModel();
-            return View(model);*/
-            var Instructors=await _profileService.GetInstructorDetails();
+            /* var model = new CombinedFormViewModel();
+             return View(model);*/
+            var courseDetails = await GetPublicCourseDetails();
+            //ViewData["Courses"]=courseDetails;
+
+            // Get instructor details
+            var instructorDetails = await GetCachedInstructorDetails();
+
+            // Set ViewData for instructor details
+            ViewData["Instructor"] = instructorDetails;
             //await SetLayoutDataAsync();
-            return View(Instructors);
+            return View(courseDetails);
         }
         /* public IActionResult index()
          {
@@ -38,6 +48,45 @@ namespace Coursera.Controllers
              return View(model);
              //return View();
          }*/
+
+
+        private async Task<List<CourseViewModel>> GetPublicCourseDetails()
+        {
+            // Try to get courses from cache first
+            if (!_cache.TryGetValue(PUBLIC_COURSE_CACHE_KEY, out List<CourseViewModel> courseDetails))
+            {
+                // If not in cache, fetch from database
+                courseDetails = await _profileService.DisplayCourseDetails();
+
+                // Cache the results with absolute expiration
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(1))  // Cache for 1 hour
+                    .SetPriority(CacheItemPriority.Normal);
+
+                _cache.Set(PUBLIC_COURSE_CACHE_KEY, courseDetails, cacheOptions);
+            }
+
+            return courseDetails ?? new List<CourseViewModel>();
+        }
+
+        private async Task<List<MyProfileModel>> GetCachedInstructorDetails()
+        {
+            if (!_cache.TryGetValue(PUBLIC_INSTRUCTOR_CACHE_KEY, out List<MyProfileModel> instructorDetails))
+            {
+                instructorDetails = await _profileService.GetInstructorDetails();
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(30))
+                    .SetAbsoluteExpiration(TimeSpan.FromHours(12));
+
+                _cache.Set(PUBLIC_INSTRUCTOR_CACHE_KEY, instructorDetails, cacheOptions);
+            }
+            return instructorDetails ?? new List<MyProfileModel>();
+        }
+
+
+
+
+
 
         public IActionResult contactform()
         {

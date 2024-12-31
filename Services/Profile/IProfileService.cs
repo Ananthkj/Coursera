@@ -7,5 +7,6 @@ namespace Coursera.Services.Profile
         Task<MyProfileModel> GetProfile(int UserId);
 
         Task<List<MyProfileModel>> GetInstructorDetails();
+        Task<List<CourseViewModel>> DisplayCourseDetails();
     }
 }

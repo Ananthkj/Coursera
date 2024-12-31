@@ -45,6 +45,14 @@ namespace Coursera.Controllers
             }
             ViewData["Instructor"] = courses;
 
+             cacheKey = $"InstructorCourses_{instructorId}";
+            if (!_cache.TryGetValue(cacheKey, out List<CourseViewModel> courseDetails))
+            {
+                courseDetails = await _profileService.DisplayCourseDetails();
+                var cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(30));
+                _cache.Set(cacheKey, courseDetails, cacheOptions);
+            }
+            ViewData["CourseDetails"] = courseDetails;
 
         }
 
