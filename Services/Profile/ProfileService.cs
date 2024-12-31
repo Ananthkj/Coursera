@@ -1,5 +1,7 @@
 ﻿using Coursera.Areas.Instructor.Models;
 using Coursera.Data;
+using Coursera.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Coursera.Services.Profile
@@ -56,6 +58,23 @@ namespace Coursera.Services.Profile
                     Instagram = u.Instagram
                 }).ToListAsync();
             return Instructors;
+        }
+
+        public async Task<List<CourseViewModel>> DisplayCourseDetails()
+        {
+            var approvedCourses = await _context.courses
+                 .Where(c => c.ApprovalStatus == ApprovalStatus.Approved)
+                 .Select(c => new CourseViewModel
+                 {
+                     CourseId = c.Id,
+                     CourseName = c.CourseName,
+                     CourseImage = c.CourseImage,
+                     ApprovalStatus = c.ApprovalStatus
+
+                 }).ToListAsync();
+
+           
+            return approvedCourses;
         }
 
     }

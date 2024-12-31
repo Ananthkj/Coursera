@@ -495,6 +495,25 @@ namespace Coursera.Areas.Instructor.Controllers
             return Ok("Lesson Updated Succesfully");
         }
 
+        public async Task<IActionResult> DisplayCoursesUI()
+        {
+           var approvedCourses= await _context.courses
+                .Where(c=>c.ApprovalStatus==ApprovalStatus.Approved)
+                .Select(c=>new CourseViewModel
+                {
+                    CourseId=c.Id,
+                    CourseName=c.CourseName,
+                    CourseImage=c.CourseImage,
+                    ApprovalStatus=c.ApprovalStatus
+
+                }).ToListAsync();
+
+            var allCourses = new MyProfileModel
+            {
+                AllCourses = approvedCourses
+            };
+            return View(allCourses);
+        }
 
 
 
