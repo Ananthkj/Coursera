@@ -13,9 +13,9 @@ File Storage: Local server storage. <br>
 
 **Testing the Application**
 Admin:<br>
-Email: anandkumarj95@gmail.com<br>
-Password: 1234<br>
+Email: admin@gmail.com<br>
+Password: admin@123<br>
 
 Instructor:<br>
-Email: ramesh@gmail.com<br>
-Password: 123456<br>
+Email: instructor@gmail.com<br>
+Password: instructor@123<br>
