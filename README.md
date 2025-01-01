@@ -13,10 +13,10 @@ File Storage: Local server storage. <br>
 
 **Testing the Application**  
 Admin:<br>
-Email: `OpenAI admin@gmail.com`<br>
+Email: `admin@gmail.com`<br>
 Password: admin@123<br>  
 
 Instructor:<br>
-Email: `OpenAI instructor@gmail.com`<br>
+Email: `instructor@gmail.com`<br>
 Password: instructor@123<br>
 
