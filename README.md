@@ -11,11 +11,12 @@ Database: SQL Server 2022 <br>
 Framework: Entity Framework (Linq Query) <br>
 File Storage: Local server storage. <br>
 
-**Testing the Application**
+**Testing the Application**  
 Admin:<br>
-Email: [OpenAI]admin@gmail.com<br>
-Password: admin@123<br>
+Email: `OpenAI admin@gmail.com`<br>
+Password: admin@123<br>  
 
 Instructor:<br>
-Email: [OpenAI]instructor@gmail.com<br>
+Email: `OpenAI instructor@gmail.com`<br>
 Password: instructor@123<br>
+
