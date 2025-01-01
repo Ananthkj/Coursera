@@ -14,7 +14,7 @@ File Storage: Local server storage. <br>
 **Testing the Application**  
 Admin:<br>
 Email: `admin@gmail.com`<br>
-Password:&nbsp;admin@123<br>  
+Password: &nbsp;admin@123<br>  
 
 Instructor:<br>
 Email: `instructor@gmail.com`<br>
