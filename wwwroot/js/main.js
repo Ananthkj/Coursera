@@ -46,11 +46,15 @@
     console.log("Number of courses:", courseItem); // Debug count
 
     $(".courses-carousel").owlCarousel({
-        autoplay: false,
+        autoplay: true,
         smartSpeed: 1500,
-        loop: false,
+        loop: true,
         dots: false,
-        nav : true,
+        nav: true,
+        navText: [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
         responsive: {
             0:{
                 items:1
@@ -71,7 +75,7 @@
     // Team carousel
     var itemCount = $('.team-carousel .team-item').length;
     $(".team-carousel").owlCarousel({
-        autoplay: false,
+        autoplay: true,
         smartSpeed: 1000,
         margin: 30,
         dots: false,

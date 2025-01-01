@@ -60,8 +60,8 @@ namespace Coursera.Controllers
 
                 // Cache the results with absolute expiration
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromHours(1))  // Cache for 1 hour
-                    .SetPriority(CacheItemPriority.Normal);
+                    .SetAbsoluteExpiration(TimeSpan.FromDays(30));  // Cache for 1 hour
+                    
 
                 _cache.Set(PUBLIC_COURSE_CACHE_KEY, courseDetails, cacheOptions);
             }
@@ -75,8 +75,8 @@ namespace Coursera.Controllers
             {
                 instructorDetails = await _profileService.GetInstructorDetails();
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(30))
-                    .SetAbsoluteExpiration(TimeSpan.FromHours(12));
+                    .SetSlidingExpiration(TimeSpan.FromDays(30));
+                    
 
                 _cache.Set(PUBLIC_INSTRUCTOR_CACHE_KEY, instructorDetails, cacheOptions);
             }

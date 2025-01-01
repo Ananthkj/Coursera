@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace Coursera.Controllers
 {
-    public class BaseController : Controller,IBaseController
+    public class BaseController : Controller
     {
         private readonly IProfileService _profileService;
 
@@ -22,12 +22,12 @@ namespace Coursera.Controllers
         }
 
         //Better approach - Override OnActionExecutionAsync in BaseController
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        /*public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             await SetLayoutDataAsync();
             await next(); // Execute the action
-        }
-        public async Task SetLayoutDataAsync()
+        }*/
+       /* public async Task SetLayoutDataAsync()
         {
             int instructorId = GetInstructorId();
             var userProfile = await _profileService.GetProfile(instructorId);
@@ -54,7 +54,7 @@ namespace Coursera.Controllers
             }
             ViewData["CourseDetails"] = courseDetails;
 
-        }
+        }*/
 
 
         protected int GetInstructorId()

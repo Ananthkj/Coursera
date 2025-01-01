@@ -4,46 +4,85 @@
 
 @model List<Coursera.Models.User>
 
-<h1>User Management List</h1>
+
 
 @{
     int count = 1;
 }
 
-<table class="table table-head-bg-primary mt-4">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">UserRole</th>
-            <th scope="col">IsActive</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var users in Model)
-        {
-            <tr>
-                <td>@count</td>
-                <td>@users.Name</td>
-                <td>@users.Email</td>
-                <td>@users.Role.RoleName</td>
-                <td>@users.IsActive</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@users.Id" class="btn btn-warning">Edit</a>
-                    @*   <a asp-action="Delete" asp-route-id="@users.Id" class="btn btn-sm btn-danger">Delete</a> *@
-                    <button type="button"
-                            class="btn btn-danger alert-demo"
-                            data-user-id="@users.Id">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            count++;
-        }
-    </tbody>
-</table>
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            @* <h3 class="fw-bold mb-3">Tables</h3> *@
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">User Management</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">All Users</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">All Users</div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-head-bg-primary mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">UserRole</th>
+                                    <th scope="col">IsActive</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var users in Model)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@users.Name</td>
+                                        <td>@users.Email</td>
+                                        <td>@users.Role.RoleName</td>
+                                        <td>@users.IsActive</td>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@users.Id" class="btn btn-warning">Edit</a>
+                                            @*   <a asp-action="Delete" asp-route-id="@users.Id" class="btn btn-sm btn-danger">Delete</a> *@
+                                            <button type="button"
+                                                    class="btn btn-danger alert-demo"
+                                                    data-user-id="@users.Id">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    count++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

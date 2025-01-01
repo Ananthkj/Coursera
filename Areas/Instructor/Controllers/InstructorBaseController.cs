@@ -13,7 +13,7 @@ namespace Coursera.Areas.Instructor.Controllers
 {
     [Area("Instructor")]
     [Authorize(Roles = "Instructor")]
-    public class InstructorBaseController : Controller, IBaseController
+    public class InstructorBaseController : Controller
     {
         private readonly IProfileService _profileService;
 
