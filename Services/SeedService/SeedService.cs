@@ -12,7 +12,7 @@ namespace Coursera.Services.SeedService
             this._context = context;
         }
 
-        public void Seed()
+        public async void Seed()
         {
             /*_context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Users',RESEED,0)");*/
             // Check if roles already exist
@@ -34,15 +34,21 @@ namespace Coursera.Services.SeedService
                 _context.SaveChanges();
             }
 
-            if (!_context.users.Any(u => u.Email == "anandkumarj95@gmail.com"))
+            if (!_context.users.Any(u => u.Email == "admin@gmail.com"))
             {
+                if(!_context.users.Any())
+                {
+                    await seedTableColumn(_context);
+                }
+
+
                 var adminRoleId = _context.roles.FirstOrDefault(r => r.RoleName == "Admin").Id;
                 _context.users.Add(new User()
                 {
                     
                     Name="Admin",
-                    Email= "anandkumarj95@gmail.com",
-                    PasswordHash=BCrypt.Net.BCrypt.HashPassword("1234"),
+                    Email= "admin@gmail.com",
+                    PasswordHash=BCrypt.Net.BCrypt.HashPassword("admin@123"),
                     CreatedDate= DateTime.Now,
                     IsActive= false,
                     RoleId=adminRoleId
@@ -50,6 +56,12 @@ namespace Coursera.Services.SeedService
                 _context.SaveChanges();
             }
 
+        }
+
+        private async Task seedTableColumn(ApplicationDbContext _context)
+        {
+            var sqlQuery = $"DBCC CHECKIDENT('users',RESEED,0)";
+           await _context.Database.ExecuteSqlRawAsync(sqlQuery);
         }
 
         public void Seed2()
