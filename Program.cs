@@ -22,24 +22,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //Bind the SmtpSettings section to the SmtpSettings class
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
-// Configure Claims-Based Authentication using Cookies
-/*builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-.AddCookie(options =>
-{
-    options.LoginPath = "/Account/Login"; // Redirect to this path if unauthenticated
-    options.AccessDeniedPath = "/Account/AccessDenied"; // Redirect if access is denied
-    options.ExpireTimeSpan = TimeSpan.FromDays(30); // Customize cookie expiration
-    options.SlidingExpiration = true; // Renew cookies on each valid request
-    options.Cookie.HttpOnly = true; // Protect cookies from JavaScript access
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure cookies are sent only over HTTPS
-    options.Cookie.SameSite = SameSiteMode.Strict; // Mitigate CSRF attacks
-});*/
-
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
